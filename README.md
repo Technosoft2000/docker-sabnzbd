@@ -13,6 +13,7 @@ This container includes par2 multicore.  http://sabnzbd.org/
 
 # Modifications by Technosoft2000
 * added support for decompression of 7Zip archives 
+* added volume mapping for SSL/TLS certificates `/certificates`
 
 ## Usage
 
@@ -20,10 +21,11 @@ This container includes par2 multicore.  http://sabnzbd.org/
 docker create --name=sabnzbd \
 -v <path to data>:/config \
 -v <path to downloads>:/downloads \
--v <path to incomplete downloads>:/incomplete-downloads \
--v /etc/localtime:/etc/localtime:ro \
--e PGID=<gid> -e PUID=<uid> \
--p 8080:8080 -p 9090:9090 linuxserver/sabnzbd
+[-v <path to incomplete downloads>:/incomplete-downloads \]
+[-v <path to certificates>:/certificates \]
+[-v /etc/localtime:/etc/localtime:ro \]
+-e PGID=<Group ID (gid)> -e PUID=<User ID (uid)> \
+-p 8080:8080 -p 9090:9090 technosoft2000/sabnzbd
 ```
 
 **Parameters**
@@ -32,8 +34,9 @@ docker create --name=sabnzbd \
 * `-p 9090` - https port for the webui *see note below*
 * `-v /config` - local path for sabnzbd config files
 * `-v /downloads` local path for finished downloads
-* `-v /incomplete-downloads` local path for incomplete-downloads - *optional*
-* `-v /etc/localhost` for timesync - *optional*
+* `-v /incomplete-downloads` local path for incomplete-downloads - __optional__
+* `-v /certificates` local path for SSL/TLS certificates - __optional__
+* `-v /etc/localhost` for timesync - __optional__
 * `-e PGID` for GroupID - see below for explanation
 * `-e PUID` for UserID - see below for explanation
 

@@ -1,2 +1,2 @@
 #!/bin/bash
-chown abc:abc /downloads /config /incomplete-downloads
+chown abc:abc /downloads /config /incomplete-downloads /certificates

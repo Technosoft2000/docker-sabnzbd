@@ -32,7 +32,7 @@ ADD init/ /etc/my_init.d/
 RUN chmod -v +x /etc/service/*/run && chmod -v +x /etc/my_init.d/*.sh
 
 # set volumes
-VOLUME /config /downloads /incomplete-downloads
+VOLUME /config /downloads /incomplete-downloads /certificates
 
 # expose ports
 EXPOSE 8080 9090
