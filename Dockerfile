@@ -4,6 +4,7 @@ MAINTAINER Sparklyballs <sparklyballs@linuxserver.io>
 ENV APTLIST="sabnzbdplus \
 sabnzbdplus-theme-mobile \
 unrar \
+p7zip \
 wget"
 
 # Set the locale
