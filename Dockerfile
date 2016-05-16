@@ -11,6 +11,12 @@ wget"
 ENV LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8
 RUN locale-gen en_US.UTF-8
 
+# Set the timezone 
+# HINT: set this environment variable to true to set timezone on container startup
+ENV SET_CONTAINER_TIMEZONE false
+# Default container timezone as found under the directory /usr/share/zoneinfo/
+ENV CONTAINER_TIMEZONE localtime
+
 # install our compiled version of par2 multicore
 ADD deb/ /tmp/
 RUN apt-get update -q && \

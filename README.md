@@ -1,19 +1,13 @@
-![https://linuxserver.io](https://www.linuxserver.io/wp-content/uploads/2015/06/linuxserver_medium.png)
-
-The [LinuxServer.io](https://linuxserver.io) team brings you another container release featuring auto-update on startup, easy user mapping and community support. Find us for support at:
-* [forum.linuxserver.io](https://forum.linuxserver.io)
-* [IRC](https://www.linuxserver.io/index.php/irc/) on freenode at `#linuxserver.io`
-* [Podcast](https://www.linuxserver.io/index.php/category/podcast/) covers everything to do with getting the most from your Linux Server plus a focus on all things Docker and containerisation!
-
-# linuxserver/sabnzbd
-![](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/sabnzbd-banner.png)
+# SABnzbd
+![](http://sabnzbd.org/resources/landing/sabnzbd_logo.png)
 
 SABnzbd makes Usenet as simple and streamlined as possible by automating everything we can. All you have to do is add an .nzb. SABnzbd takes over from there, where it will be automatically downloaded, verified, repaired, extracted and filed away with zero human interaction. 
 This container includes par2 multicore.  http://sabnzbd.org/
 
-# Modifications by Technosoft2000
+## Modifications by Technosoft2000
 * added support for decompression of 7Zip archives 
 * added volume mapping for SSL/TLS certificates `/certificates`
+* added additional timezone environment settings `SET_CONTAINER_TIMEZONE` and `CONTAINER_TIMEZONE`
 
 ## Usage
 
@@ -24,6 +18,8 @@ docker create --name=sabnzbd \
 [-v <path to incomplete downloads>:/incomplete-downloads \]
 [-v <path to certificates>:/certificates \]
 [-v /etc/localtime:/etc/localtime:ro \]
+[-e SET_CONTAINER_TIMEZONE=true \]
+[-e CONTAINER_TIMEZONE=<container timezone value> \]
 -e PGID=<Group ID (gid)> -e PUID=<User ID (uid)> \
 -p 8080:8080 -p 9090:9090 technosoft2000/sabnzbd
 ```
@@ -36,9 +32,23 @@ docker create --name=sabnzbd \
 * `-v /downloads` local path for finished downloads
 * `-v /incomplete-downloads` local path for incomplete-downloads - __optional__
 * `-v /certificates` local path for SSL/TLS certificates - __optional__
-* `-v /etc/localhost` for timesync - __optional__
+* `-v /etc/localtime` for timesync - __optional__
+* `-e SET_CONTAINER_TIMEZONE` set it to `true` if the specified `CONTAINER_TIMEZONE` should be used - __optional__ 
+* `-e CONTAINER_TIMEZONE` container timezone as found under the directory `/usr/share/zoneinfo/` - __optional__
 * `-e PGID` for GroupID - see below for explanation
 * `-e PUID` for UserID - see below for explanation
+
+### Container Timezone
+
+In the case of the Synology NAS it is not possible to map `/etc/localtime` for timesync, and for this and similar case
+set `SET_CONTAINER_TIMEZONE` to `true` and specify with `CONTAINER_TIMEZONE` which timezone should be used.
+The possible container timezones can be found under the directory `/usr/share/zoneinfo/`.
+Examples:
+* localtime
+* UTC
+* Europe\Berlin
+* Europe\Vienna
+* America\New_York
 
 ### User / Group Identifiers
 
@@ -66,10 +76,6 @@ See here for info on some of the switch settings for sabnzbd http://wiki.sabnzbd
 
 ## Credits
 https://github.com/jcfp/debpkg-par2tbb for the par2 multicore used in this container.
+https://hub.docker.com/r/linuxserver/sabnzbd for the sabnzbd docker image
 
-## Versions
-+ **17.03.2016:** Bump to install 1.0 final at startup
-+ **14.03.2016:** Refresh image to pick up latest RC
-+ **23.01.2015:** Refresh image.
-+ **14.12.2015:** Refresh image to pick up latest beta
-+ **21.08.2015:** Intial Release. 
+
