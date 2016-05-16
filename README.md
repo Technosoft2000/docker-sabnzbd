@@ -29,12 +29,12 @@ docker create --name=sabnzbd \
 * `-p 8080` - http port for the webui
 * `-p 9090` - https port for the webui *see note below*
 * `-v /config` - local path for sabnzbd config files
-* `-v /downloads` local path for finished downloads
-* `-v /incomplete-downloads` local path for incomplete-downloads - __optional__
-* `-v /certificates` local path for SSL/TLS certificates - __optional__
-* `-v /etc/localtime` for timesync - __optional__
-* `-e SET_CONTAINER_TIMEZONE` set it to `true` if the specified `CONTAINER_TIMEZONE` should be used - __optional__ 
-* `-e CONTAINER_TIMEZONE` container timezone as found under the directory `/usr/share/zoneinfo/` - __optional__
+* `-v /downloads` - local path for finished downloads
+* `-v /incomplete-downloads` - local path for incomplete-downloads - __optional__
+* `-v /certificates` - local path for SSL/TLS certificates - __optional__
+* `-v /etc/localtime` - for timesync - __optional__
+* `-e SET_CONTAINER_TIMEZONE` - set it to `true` if the specified `CONTAINER_TIMEZONE` should be used - __optional__ 
+* `-e CONTAINER_TIMEZONE` - container timezone as found under the directory `/usr/share/zoneinfo/` - __optional__
 * `-e PGID` for GroupID - see below for explanation
 * `-e PUID` for UserID - see below for explanation
 
@@ -77,5 +77,3 @@ See here for info on some of the switch settings for sabnzbd http://wiki.sabnzbd
 ## Credits
 https://github.com/jcfp/debpkg-par2tbb for the par2 multicore used in this container.
 https://hub.docker.com/r/linuxserver/sabnzbd for the sabnzbd docker image
-
-
