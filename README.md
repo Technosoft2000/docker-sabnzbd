@@ -4,7 +4,7 @@
 SABnzbd makes Usenet as simple and streamlined as possible by automating everything we can. All you have to do is add an .nzb. SABnzbd takes over from there, where it will be automatically downloaded, verified, repaired, extracted and filed away with zero human interaction. 
 This container includes par2 multicore.  http://sabnzbd.org/
 
-## Modifications by Technosoft2000
+## Modifications of [linuxserver/sabnzbd](https://hub.docker.com/r/linuxserver/sabnzbd/) by Technosoft2000
 * added support for decompression of 7Zip archives 
 * added volume mapping for SSL/TLS certificates `/certificates`
 * added additional timezone environment settings `SET_CONTAINER_TIMEZONE` and `CONTAINER_TIMEZONE`
