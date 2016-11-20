@@ -16,7 +16,7 @@ echo "[INFO] Checkout the latest SABnzbd version ..."
 [[ ! -d $SABNZBD_HOME/app/.git ]] && \
 gosu $PUSER:$PGROUP bash -c "git clone -b $SABNZBD_BRANCH $SABNZBD_REPO $SABNZBD_HOME/app" && \
 # build multi-language support
-python $SABNZBD_HOME/tools/make_mo.py
+python $SABNZBD_HOME/app/tools/make_mo.py
 
 # opt out for autoupdates using env variable
 if [ -z "$ADVANCED_DISABLEUPDATES" ]; then
