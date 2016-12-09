@@ -2,9 +2,9 @@
 
 #Set default values for userid, username, groupid and groupname if not set yet
 PUID=${PUID:=15000}
-PUSER=${PUSER:=sickrage}
+PUSER=${PUSER:=sabnzbd}
 PGID=${PGID:=15000}
-PGROUP=${PGROUP:=sickrage}
+PGROUP=${PGROUP:=sabnzbd}
 
 #Create internal sickrage group and user 
 #(which will be mapped to external group and user, and used to run the process)
