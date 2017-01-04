@@ -17,6 +17,38 @@ SABnzbd takes over from there, where it will be automatically downloaded, verifi
 
 If you want to know more you can head over to the SABnzbd website: http://sabnzbd.org.
 
+## Updates ##
+
+**2016-01-04 - v1.1.0**
+
+ * Upgrade from Alpine v3.4 to Alpine v3.5
+  + important is the switch from OpenSSL to LibreSSL
+  + glib 2.50.2
+  + better python3 support
+ * added LABEL information at the *Dockerfile* which can be seen with ```docker inspect sabnzbd```
+  + image.version ... the current version number of the docker image e.g 1.1
+  + image.description ... a short description of the docker image
+  + image.date ... the creation/update date of the docker image e.g. 2017-01-04
+  + url.docker ... the docker registry URL from where the docker image is distributed
+  + url.github ... the github project URL of the docker image
+  + url.support ... the support forum URL where you can reach me
+ * Enhanced the logging information at container startup
+  + on installation: git clone command is shown now with detailed information
+  + on update: git branch information and hash is shown before and after git pull
+ * Added additional unpacker
+  + unzip
+  + tar
+ * Added nzbToMedia from https://github.com/clinton-hall/nzbToMedia at ```/sabnzbd/config/scripts```
+  + includes ffmpeg & ffprobe support
+  + for configuration information look at https://github.com/clinton-hall/nzbToMedia/wiki/autoProcessMedia.cfg
+  + if you use for example ```-v /volume1/docker/apps/sabnzbd/config:/sabnzbd/config``` change into directory 
+    ```/volume1/docker/apps/sabnzbd/config/scripts``` to edit and configure autoProcessMedia.cfg
+ * changed sabnzbd scripts volume from ```/sabnzbd/autoProcessScripts``` to ```/sabnzbd/config/scripts```
+
+**2016-12-09 - v1.0.0**
+
+ * Fixed User & Group Name -> changed from 'sickrage' to 'sabnzbd' 
+
 ## Usage ##
 
 __Create the container:__
@@ -28,7 +60,6 @@ docker create --name=sabnzbd --restart=always \
 -v <your incomplete downloads folder>:/downloads/incomplete \
 [-v <your nzb blackhole folder>:/downloads/nzb \]
 [-v <your nzb backup folder>:/sabnzbd/nzbbackups \]
-[-v <your post processing scripts folder>:/sabnzbd/autoProcessScripts \]
 [-e SABNZBD_REPO=https://github.com/sabnzbd/sabnzbd.git \]
 [-e SABNZBD_BRANCH=master \]
 [-e SET_CONTAINER_TIMEZONE=true \]
@@ -78,12 +109,11 @@ docker start sabnzbd
 ## Parameters ##
 * `-p 8080` - http port for the web user interface
 * `-p 9090` - https port for the web user interface
-* `-v /sabnzbd/config` - local path for SABnzbd config files
+* `-v /sabnzbd/config` - local path for SABnzbd config files; at `/sabnzbd/config/scripts` the post processing scripts are available
 * `-v /downloads/complete` - the folder where SABnzbd puts the completed downloads
 * `-v /downloads/incomplete` - the folder where SABnzbd puts the incomplete downloads and temporary files
 * `-v /downloads/nzb` - the folder where SABnzbd is searching for nzb files - __optional__
 * `-v /sabnzbd/nzbbackups` - the folder where SABnzbd puts the processed nzb files for backup - __optional__
-* `-v /sabnzbd/autoProcessScripts` - folder of the post processing scripts - __optional__
 * `-v /etc/localhost` - for timesync - __optional__
 * `-e SABNZBD_REPO` - set it to the SABnzbd GitHub repository; by default it uses https://github.com/sabnzbd/sabnzbd.git - __optional__
 * `-e SABNZBD_BRANCH` - set which SABnzbd GitHub repository branch you want to use, __master__ (default branch), __0.7.x__, __1.0.x__, __1.1.x__, __develop__ - __optional__
@@ -97,12 +127,14 @@ docker start sabnzbd
 In the case of the Synology NAS it is not possible to map `/etc/localtime` for timesync, and for this and similar case
 set `SET_CONTAINER_TIMEZONE` to `true` and specify with `CONTAINER_TIMEZONE` which timezone should be used.
 The possible container timezones can be found under the directory `/usr/share/zoneinfo/`.
+
 Examples:
-* UTC - __this is the default value if no value is set__
-* Europe\Berlin
-* Europe\Vienna
-* America\New_York
-* ...
+
+ * UTC - __this is the default value if no value is set__
+ * Europe/Berlin
+ * Europe/Vienna
+ * America/New_York
+ * ...
 
 __Don't use the value__ `localtime` because it results into: `failed to access '/etc/localtime': Too many levels of symbolic links`
 
