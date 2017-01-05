@@ -19,6 +19,19 @@ If you want to know more you can head over to the SABnzbd website: http://sabnzb
 
 ## Updates ##
 
+**2016-01-05 - v1.1.1**
+
+ * code clean-up and enhanced the start script
+  + new script ```checkout.sh``` used to clone & update sources via git, used for sabnzbd and nzbToMedia
+ * new environment variables especially for nzbToMedia
+  + NZBTOMEDIA_REPO for nzbToMedia GitHub repository
+  + NZBTOMEDIA_BRANCH for nzbToMedia GitHub repository branch
+ * upgrade of gosu from v1.9 to v1.10
+ * __known issues__
+  + sabnzbd shows at branch 1.1.x as version 'develop', 
+    this is because of a unintended change at sabnzbd's ```version.py``` issued by a backport from the develop branch.
+    Nevertheless it is the right version after the git clone and this issue is only an cosmetic issue.
+
 **2016-01-04 - v1.1.0**
 
  * Upgrade from Alpine v3.4 to Alpine v3.5
@@ -62,6 +75,8 @@ docker create --name=sabnzbd --restart=always \
 [-v <your nzb backup folder>:/sabnzbd/nzbbackups \]
 [-e SABNZBD_REPO=https://github.com/sabnzbd/sabnzbd.git \]
 [-e SABNZBD_BRANCH=master \]
+[-e NZBTOMEDIA_REPO="https://github.com/clinton-hall/nzbToMedia.git" \]
+[-e NZBTOMEDIA_BRANCH="master" \]
 [-e SET_CONTAINER_TIMEZONE=true \]
 [-e CONTAINER_TIMEZONE=<container timezone value> \]
 [-e PGID=<group ID (gid)> -e PUID=<user ID (uid)> \]
@@ -117,6 +132,8 @@ docker start sabnzbd
 * `-v /etc/localhost` - for timesync - __optional__
 * `-e SABNZBD_REPO` - set it to the SABnzbd GitHub repository; by default it uses https://github.com/sabnzbd/sabnzbd.git - __optional__
 * `-e SABNZBD_BRANCH` - set which SABnzbd GitHub repository branch you want to use, __master__ (default branch), __0.7.x__, __1.0.x__, __1.1.x__, __develop__ - __optional__
+* `-e NZBTOMEDIA_REPO` - set it to the nzbToMedia GitHub repository; by default it uses "https://github.com/clinton-hall/nzbToMedia.git" - __optional__
+* `-e NZBTOMEDIA_BRANCH` - set it to the nzbToMedia GitHub repository branch you want to use, __master__ (default branch), __nightly__, __more-cleanup__, __dev__ - __optional__
 * `-e SET_CONTAINER_TIMEZONE` - set it to `true` if the specified `CONTAINER_TIMEZONE` should be used - __optional__
 * `-e CONTAINER_TIMEZONE` - container timezone as found under the directory `/usr/share/zoneinfo/` - __optional__
 * `-e PGID` for GroupID - see below for explanation - __optional__

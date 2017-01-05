@@ -1,19 +1,18 @@
 FROM alpine:3.5
 MAINTAINER Technosoft2000 <technosoft2000@gmx.net>
-LABEL image.version="1.1.0" \
+LABEL image.version="1.1.1" \
       image.description="Docker image for SABnzbd, based on docker image of Alpine" \
-	  image.date="2017-01-04" \
-	  url.docker="https://hub.docker.com/r/technosoft2000/sabnzbd" \
-	  url.github="https://github.com/Technosoft2000/docker-sabnzbd" \
-	  url.support="https://cytec.us/forum"
+      image.date="2017-01-04" \
+      url.docker="https://hub.docker.com/r/technosoft2000/sabnzbd" \
+      url.github="https://github.com/Technosoft2000/docker-sabnzbd" \
+      url.support="https://cytec.us/forum"
 
 # Set basic environment settings
-
 ENV \
     # - VERSION: the docker image version (corresponds to the above LABEL image.version)
-	VERSION="1.1.0" \
-	
-	# - TERM: the name of a terminal information file from /lib/terminfo, 
+    VERSION="1.1.1" \
+    
+    # - TERM: the name of a terminal information file from /lib/terminfo, 
     # this file instructs terminal programs how to achieve things such as displaying color.
     TERM="xterm" \
 
@@ -23,12 +22,12 @@ ENV \
     LC_ALL="de_DE.UTF-8" \
 
     # - PKG_*: the needed applications for installation
-    GOSU_VERSION="1.9" \
+    GOSU_VERSION="1.10" \
     PKG_BASE="bash tzdata git" \
     PKG_DEV="make gcc g++ automake autoconf python-dev libressl-dev libffi-dev" \
     PKG_PYTHON="ca-certificates py2-pip python py-libxml2 py-lxml" \
     PKG_COMPRESS="unrar unzip tar p7zip" \
-	PKG_ADDONS="ffmpeg" \
+    PKG_ADDONS="ffmpeg" \
 
     # - SET_CONTAINER_TIMEZONE: set this environment variable to true to set timezone on container startup
     SET_CONTAINER_TIMEZONE="false" \
@@ -40,13 +39,16 @@ ENV \
     SABNZBD_HOME="/sabnzbd" \
 
     # - SABNZBD_REPO, SABNZBD_BRANCH: SABnzbd GitHub repository 
-	# and related branch (e.g. master, 0.7.x, 1.0.x, 1.1.x, develop)
+    # and related branch (e.g. master, 0.7.x, 1.0.x, 1.1.x, develop)
     SABNZBD_REPO="https://github.com/sabnzbd/sabnzbd.git" \
     SABNZBD_BRANCH="master" \
 
     # - SABNZBD_DOWNLOADS: main download folder
-    SABNZBD_DOWNLOADS="/downloads"
+    SABNZBD_DOWNLOADS="/downloads" \
 
+	# - NZBTOMEDIA_REPO, NZBTOMEDIA_BRANCH: nzbToMedia GitHub repository
+	NZBTOMEDIA_REPO="https://github.com/clinton-hall/nzbToMedia.git" \
+    NZBTOMEDIA_BRANCH="master"
 
 RUN \
     # update the package list
