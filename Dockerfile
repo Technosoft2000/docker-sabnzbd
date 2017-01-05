@@ -46,8 +46,8 @@ ENV \
     # - SABNZBD_DOWNLOADS: main download folder
     SABNZBD_DOWNLOADS="/downloads" \
 
-	# - NZBTOMEDIA_REPO, NZBTOMEDIA_BRANCH: nzbToMedia GitHub repository
-	NZBTOMEDIA_REPO="https://github.com/clinton-hall/nzbToMedia.git" \
+    # - NZBTOMEDIA_REPO, NZBTOMEDIA_BRANCH: nzbToMedia GitHub repository
+    NZBTOMEDIA_REPO="https://github.com/clinton-hall/nzbToMedia.git" \
     NZBTOMEDIA_BRANCH="master"
 
 RUN \
