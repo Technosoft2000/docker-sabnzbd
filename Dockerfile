@@ -119,7 +119,7 @@ COPY *.sh $SABNZBD_HOME/
 RUN chmod u+x $SABNZBD_HOME/start.sh
 
 # Set volumes for the SABnzbd folder structure
-VOLUME $SABNZBD_HOME/config $SABNZBD_HOME/nzbbackups $SABNZBD_HOME/config/scripts $SABNZBD_DOWNLOADS/complete $SABNZBD_DOWNLOADS/incomplete
+VOLUME $SABNZBD_HOME/config $SABNZBD_HOME/nzbbackups $SABNZBD_DOWNLOADS/complete $SABNZBD_DOWNLOADS/incomplete
 
 # Expose ports
 EXPOSE 8080 9090
