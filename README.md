@@ -19,7 +19,7 @@ If you want to know more you can head over to the SABnzbd website: http://sabnzb
 
 ## Updates ##
 
-**2016-01-05 - v1.1.1**
+**2017-01-05 - v1.1.1**
 
  * code clean-up and enhanced the start script
   + new script ```checkout.sh``` used to clone & update sources via git, used for sabnzbd and nzbToMedia
@@ -32,7 +32,7 @@ If you want to know more you can head over to the SABnzbd website: http://sabnzb
     this is because of a unintended change at sabnzbd's ```version.py``` issued by a backport from the develop branch.
     Nevertheless it is the right version after the git clone and this issue is only an cosmetic issue.
 
-**2016-01-04 - v1.1.0**
+**2017-01-04 - v1.1.0**
 
  * Upgrade from Alpine v3.4 to Alpine v3.5
   + important is the switch from OpenSSL to LibreSSL
@@ -147,10 +147,10 @@ The possible container timezones can be found under the directory `/usr/share/zo
 
 Examples:
 
- * UTC - __this is the default value if no value is set__
- * Europe/Berlin
- * Europe/Vienna
- * America/New_York
+ * ```UTC``` - __this is the default value if no value is set__
+ * ```Europe/Berlin```
+ * ```Europe/Vienna```
+ * ```America/New_York```
  * ...
 
 __Don't use the value__ `localtime` because it results into: `failed to access '/etc/localtime': Too many levels of symbolic links`
