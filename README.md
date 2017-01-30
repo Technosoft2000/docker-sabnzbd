@@ -62,6 +62,19 @@ If you want to know more you can head over to the SABnzbd website: http://sabnzb
 
  * Fixed User & Group Name -> changed from 'sickrage' to 'sabnzbd' 
 
+## Features ##
+
+ * running SABnzbd under its own user (not root)
+ * changing of the UID and GID for the SABnzbd user
+ * support of SSL / HTTPS encryption via __LibreSSL__
+ * usage and support of different unpacker
+   + RAR archives via ```unrar```
+   + ZIP archives via ```unzip```
+   + TAR archives via ```tar```
+   + 7Zip archives via ```p7zip```
+ * usage of the latest par2 repair utility via ```par2cmdline``` of master branch from https://github.com/Parchive/par2cmdline
+ * support of nzbToMedia post-processing scripts from https://github.com/clinton-hall/nzbToMedia
+
 ## Usage ##
 
 __Create the container:__
@@ -122,6 +135,15 @@ docker start sabnzbd
 ```
 
 ## Parameters ##
+
+### Introduction ###
+The parameters are split into two parts which are separated via colon.
+The left side describes the host and the right side the container. 
+For example a port definition looks like this ```-p external:internal``` and defines the port mapping from internal (the container) to external (the host).
+So ```-p 8080:80``` would expose port __80__ from inside the container to be accessible from the host's IP on port __8080__.
+Accessing http://'host':8080 (e.g. http://192.168.0.10:8080) would then show you what's running **INSIDE** the container on port __80__.
+
+### Details ###
 * `-p 8080` - http port for the web user interface
 * `-p 9090` - https port for the web user interface
 * `-v /sabnzbd/config` - local path for SABnzbd config files; at `/sabnzbd/config/scripts` the post processing scripts are available
@@ -167,5 +189,7 @@ In this instance PUID=1001 and PGID=1001. To find yours use id user as below:
 
 ## Additional ##
 Shell access whilst the container is running: `docker exec -it sabnzbd /bin/bash`
-Upgrade to the latest version: `docker restart sabnzbd`
+
+Upgrade to the latest version of sabnzbd: `docker restart sabnzbd`
+
 To monitor the logs of the container in realtime: `docker logs -f sabnzbd`
