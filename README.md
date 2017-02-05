@@ -19,6 +19,13 @@ If you want to know more you can head over to the SABnzbd website: http://sabnzb
 
 ## Updates ##
 
+**2017-02-05 - v1.1.2**
+ * created a special base image ```technosoft2000/alpine-base``` with a pre-define init process for easier image creation & maintenance
+ * sabnzbd image is based now on ```technosoft2000/alpine-base:3.5-1.0.0```
+ * version information at sabnzbd's ```version.py``` gets updated at container startup
+ * __SABNZBD...__ environment variables are changed to __APP...__
+ * it's also possible to use sabnzbd tags as __APP_BRANCH__ input to checkout a specific tagged version
+
 **2017-01-05 - v1.1.1**
 
  * code clean-up and enhanced the start script
@@ -39,12 +46,12 @@ If you want to know more you can head over to the SABnzbd website: http://sabnzb
   + glib 2.50.2
   + better python3 support
  * added LABEL information at the *Dockerfile* which can be seen with ```docker inspect sabnzbd```
-  + image.version ... the current version number of the docker image e.g 1.1
-  + image.description ... a short description of the docker image
-  + image.date ... the creation/update date of the docker image e.g. 2017-01-04
-  + url.docker ... the docker registry URL from where the docker image is distributed
-  + url.github ... the github project URL of the docker image
-  + url.support ... the support forum URL where you can reach me
+  + ```image.version``` ... the current version number of the docker image e.g 1.1
+  + ```image.description``` ... a short description of the docker image
+  + ```image.date``` ... the creation/update date of the docker image e.g. 2017-01-04
+  + ```url.docker``` ... the docker registry URL from where the docker image is distributed
+  + ```url.github``` ... the github project URL of the docker image
+  + ```url.support``` ... the support forum URL where you can reach me
  * Enhanced the logging information at container startup
   + on installation: git clone command is shown now with detailed information
   + on update: git branch information and hash is shown before and after git pull
@@ -86,8 +93,8 @@ docker create --name=sabnzbd --restart=always \
 -v <your incomplete downloads folder>:/downloads/incomplete \
 [-v <your nzb blackhole folder>:/downloads/nzb \]
 [-v <your nzb backup folder>:/sabnzbd/nzbbackups \]
-[-e SABNZBD_REPO=https://github.com/sabnzbd/sabnzbd.git \]
-[-e SABNZBD_BRANCH=master \]
+[-e APP_REPO=https://github.com/sabnzbd/sabnzbd.git \]
+[-e APP_BRANCH=master \]
 [-e NZBTOMEDIA_REPO="https://github.com/clinton-hall/nzbToMedia.git" \]
 [-e NZBTOMEDIA_BRANCH="master" \]
 [-e SET_CONTAINER_TIMEZONE=true \]
@@ -121,7 +128,7 @@ docker create --name=sabnzbd --restart=always \
 -v /volume1/downloads/incomplete:/downloads/incomplete \
 -v /volume1/downloads/nzb:/downloads/nzb \
 -v /volume1/downloads/nzbbackups:/sabnzbd/nzbbackups \
--e SABNZBD_BRANCH=1.1.x \
+-e APP_BRANCH=1.1.x \
 -e SET_CONTAINER_TIMEZONE=true \
 -e CONTAINER_TIMEZONE=Europe/Vienna \
 -e PGID=65539 -e PUID=1029 \
@@ -152,8 +159,8 @@ Accessing http://'host':8080 (e.g. http://192.168.0.10:8080) would then show you
 * `-v /downloads/nzb` - the folder where SABnzbd is searching for nzb files - __optional__
 * `-v /sabnzbd/nzbbackups` - the folder where SABnzbd puts the processed nzb files for backup - __optional__
 * `-v /etc/localhost` - for timesync - __optional__
-* `-e SABNZBD_REPO` - set it to the SABnzbd GitHub repository; by default it uses https://github.com/sabnzbd/sabnzbd.git - __optional__
-* `-e SABNZBD_BRANCH` - set which SABnzbd GitHub repository branch you want to use, __master__ (default branch), __0.7.x__, __1.0.x__, __1.1.x__, __develop__ - __optional__
+* `-e APP_REPO` - set it to the SABnzbd GitHub repository; by default it uses https://github.com/sabnzbd/sabnzbd.git - __optional__
+* `-e APP_BRANCH` - set which SABnzbd GitHub repository branch you want to use, __master__ (default branch), __0.7.x__, __1.0.x__, __1.1.x__, __develop__ - __optional__
 * `-e NZBTOMEDIA_REPO` - set it to the nzbToMedia GitHub repository; by default it uses "https://github.com/clinton-hall/nzbToMedia.git" - __optional__
 * `-e NZBTOMEDIA_BRANCH` - set it to the nzbToMedia GitHub repository branch you want to use, __master__ (default branch), __nightly__, __more-cleanup__, __dev__ - __optional__
 * `-e SET_CONTAINER_TIMEZONE` - set it to `true` if the specified `CONTAINER_TIMEZONE` should be used - __optional__
