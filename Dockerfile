@@ -1,8 +1,8 @@
 FROM technosoft2000/alpine-base:3.5-1.0.0
 MAINTAINER Technosoft2000 <technosoft2000@gmx.net>
-LABEL image.version="1.1.2" \
+LABEL image.version="1.1.3" \
       image.description="Docker image for SABnzbd, based on docker image of Alpine" \
-      image.date="2017-02-05" \
+      image.date="2017-03-11" \
       url.docker="https://hub.docker.com/r/technosoft2000/sabnzbd" \
       url.github="https://github.com/Technosoft2000/docker-sabnzbd" \
       url.support="https://cytec.us/forum"
@@ -10,20 +10,20 @@ LABEL image.version="1.1.2" \
 # Set basic environment settings
 ENV \
     # - VERSION: the docker image version (corresponds to the above LABEL image.version)
-    VERSION="1.1.2" \
+    VERSION="1.1.3" \
     
     # - PUSER, PGROUP: the APP user and group name
     PUSER="sabnzbd" \
 	PGROUP="sabnzbd" \
 
-    # - APP_HOME: the APP name
+    # - APP_NAME: the APP name
     APP_NAME="SABnzbd" \
 
     # - APP_HOME: the APP home directory
     APP_HOME="/sabnzbd" \
 
     # - APP_REPO, APP_BRANCH: the APP GitHub repository and related branch
-    # for related branch or tag use e.g. master, 0.7.x, 1.0.x, 1.1.x, develop, ...
+    # for related branch or tag use e.g. master, 0.7.x, 1.0.x, 1.1.x, 1.2.x, develop, ...
     APP_REPO="https://github.com/sabnzbd/sabnzbd.git" \
     APP_BRANCH="master" \
 
@@ -95,7 +95,7 @@ COPY *.sh /init/
 # set the working directory of the APP
 WORKDIR $APP_HOME/app
 
-# Set volumes for the SABnzbd folder structure
+# Set volumes for the the APP folder structure
 VOLUME $APP_HOME/config $APP_HOME/nzbbackups $DOWNLOADS/complete $DOWNLOADS/incomplete
 
 # Expose ports

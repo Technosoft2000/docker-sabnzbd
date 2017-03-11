@@ -19,6 +19,10 @@ If you want to know more you can head over to the SABnzbd website: http://sabnzb
 
 ## Updates ##
 
+**2017-03-11 - v1.1.3**
+ * small update at Dockerfile
+ * added instructions for Synology NAS users
+
 **2017-02-05 - v1.1.2**
  * created a special base image ```technosoft2000/alpine-base``` with a pre-define init process for easier image creation & maintenance
  * sabnzbd image is based now on ```technosoft2000/alpine-base:3.5-1.0.0```
@@ -200,3 +204,201 @@ Shell access whilst the container is running: `docker exec -it sabnzbd /bin/bash
 Upgrade to the latest version of sabnzbd: `docker restart sabnzbd`
 
 To monitor the logs of the container in realtime: `docker logs -f sabnzbd`
+
+---
+
+## For Synology NAS users ##
+
+Login into the DSM Web Management
+* Open the Control Panel
+* Control _Panel_ > _Privilege_ > _Group_ and create a new one with the name 'docker'
+* add the permissions for the directories 'downloads', 'video' and so on
+* disallow the permissons to use the applications
+* Control _Panel_ > _Privilege_ > _User_ and create a new on with name 'docker' and assign this user to the group 'docker'
+
+Connect with SSH to your NAS
+* after sucessful connection change to the root account via
+```
+sudo -i
+```
+or
+```
+sudo su -
+```
+for the password use the same one which was used for the SSH authentication.
+
+* create a 'docker' directory on your volume (if such doesn't exist)
+```
+mkdir -p /volume1/docker/
+chown root:root /volume1/docker/
+```
+
+* create a 'sabnzbd' directory
+```
+cd /volume1/docker
+mkdir apps
+chown docker:docker apps
+cd apps
+mkdir -p sabnzbd/config
+chown -R docker:docker sabnzbd
+```
+
+* get your Docker User ID and Group ID of your previously created user and group
+```
+id docker
+uid=1029(docker) gid=100(users) groups=100(users),65539(docker)
+```
+
+* get the Docker image
+```
+docker pull technosoft2000/sabnzbd
+```
+
+* create a Docker container (take care regarding the user ID and group ID, change timezone and port as needed)
+```
+docker create --name=sabnzbd --restart=always \
+-v /volume1/docker/apps/sabnzbd/config:/sabnzbd/config \
+-v /volume1/downloads/complete:/downloads/complete \
+-v /volume1/downloads/incomplete:/downloads/incomplete \
+-v /volume1/downloads/nzb:/downloads/nzb \
+-v /volume1/downloads/nzbbackups:/sabnzbd/nzbbackups \
+-e APP_BRANCH=1.2.x \
+-e SET_CONTAINER_TIMEZONE=true \
+-e CONTAINER_TIMEZONE=Europe/Vienna \
+-e PGID=65539 -e PUID=1029 \
+-p 8085:8080 -p 9095:9090 \
+technosoft2000/sabnzbd
+```
+
+* check if the Docker container was created successfully
+```
+docker ps -a
+CONTAINER ID        IMAGE                           COMMAND                CREATED             STATUS              PORTS               NAMES
+b95e7f3da141        technosoft2000/sabnzbd          "/bin/bash -c /init/s" 8 seconds ago       Created 
+```
+
+* start the Docker container
+```
+docker start sabnzbd
+```
+
+* analyze the log (stop it with CTRL+C)
+```
+docker logs -f sabnzbd
+
+        ,----,                                   
+      ,/   .`|                                   
+    ,`   .'  : .--.--.        ,----,        ,-.  
+  ;    ;     //  /    '.    .'   .' \   ,--/ /|  
+.'___,/    ,'|  :  /`. /  ,----,'    |,--. :/ |  
+|    :     | ;  |  |--`   |    :  .  ;:  : ' /   
+;    |.';  ; |  :  ;_     ;    |.'  / |  '  /    
+`----'  |  |  \  \    `.  `----'/  ;  '  |  :    
+    '   :  ;   `----.   \   /  ;  /   |  |   \   
+    |   |  '   __ \  \  |  ;  /  /-,  '  : |. \  
+    '   :  |  /  /`--'  / /  /  /.`|  |  | ' \ \ 
+    ;   |.'  '--'.     /./__;      :  '  : |--'  
+    '---'      `--'---' |   :    .'   ;  |,'     
+                        ;   | .'      '--'       
+                        `---'                    
+
+      PRESENTS ANOTHER AWESOME DOCKER IMAGE
+      
+      ~~~~~ SABnzbd  Standard-Edition ~~~~~
+                                           
+[INFO] Docker image version: 1.1.2
+[INFO] Create group sabnzbd with id 65539
+[INFO] Create user sabnzbd with id 1029
+[INFO] Current active timezone is UTC
+Sun Mar  5 21:53:39 CET 2017
+[INFO] Container timezone is changed to: Europe/Vienna
+[INFO] Change the ownership of /sabnzbd (including subfolders) to sabnzbd:sabnzbd
+[INFO] Current git version is:
+git version 2.11.0
+[INFO] Checkout the latest SABnzbd version ...
+[INFO] ... git clone -b 1.2.x --single-branch https://github.com/sabnzbd/sabnzbd.git /sabnzbd/app -v
+Cloning into '/sabnzbd/app'...
+POST git-upload-pack (165 bytes)
+[INFO] Autoupdate is active, try to pull the latest sources for SABnzbd ...
+[INFO] ... current git status is
+On branch 1.2.x
+Your branch is up-to-date with 'origin/1.2.x'.
+nothing to commit, working tree clean
+555d8418e72214673ebce774f1471852bd74c7d3
+[INFO] ... pulling sources
+Already up-to-date.
+[INFO] ... git status after update is
+On branch 1.2.x
+Your branch is up-to-date with 'origin/1.2.x'.
+nothing to commit, working tree clean
+555d8418e72214673ebce774f1471852bd74c7d3
+[INFO] ... configure version.py
+[INFO] ... SABnzbd version: 1.2.x [555d8418]
+[INFO] ... build multi-language support
+Email MO files
+Compile locale/da/LC_MESSAGES/SABemail.mo
+Compile locale/de/LC_MESSAGES/SABemail.mo
+Compile locale/en/LC_MESSAGES/SABemail.mo
+Compile locale/es/LC_MESSAGES/SABemail.mo
+Compile locale/fi/LC_MESSAGES/SABemail.mo
+Compile locale/fr/LC_MESSAGES/SABemail.mo
+Compile locale/nb/LC_MESSAGES/SABemail.mo
+Compile locale/nl/LC_MESSAGES/SABemail.mo
+Compile locale/pl/LC_MESSAGES/SABemail.mo
+Compile locale/pt_BR/LC_MESSAGES/SABemail.mo
+Compile locale/ro/LC_MESSAGES/SABemail.mo
+Compile locale/ru/LC_MESSAGES/SABemail.mo
+Compile locale/sr/LC_MESSAGES/SABemail.mo
+Compile locale/sv/LC_MESSAGES/SABemail.mo
+Compile locale/zh_CN/LC_MESSAGES/SABemail.mo
+Create email templates from MO files
+Create email template for da
+Create email template for de
+Create email template for es
+Create email template for fi
+Create email template for fr
+Create email template for nb
+Create email template for nl
+Create email template for pl
+Create email template for pt_BR
+Create email template for ro
+Create email template for ru
+Create email template for sr
+Create email template for sv
+Create email template for zh_CN
+Main program MO files
+Compile locale/da/LC_MESSAGES/SABnzbd.mo
+Compile locale/de/LC_MESSAGES/SABnzbd.mo
+Compile locale/en/LC_MESSAGES/SABnzbd.mo
+Compile locale/es/LC_MESSAGES/SABnzbd.mo
+Compile locale/fi/LC_MESSAGES/SABnzbd.mo
+Compile locale/fr/LC_MESSAGES/SABnzbd.mo
+Compile locale/nb/LC_MESSAGES/SABnzbd.mo
+Compile locale/nl/LC_MESSAGES/SABnzbd.mo
+Compile locale/pl/LC_MESSAGES/SABnzbd.mo
+Compile locale/pt_BR/LC_MESSAGES/SABnzbd.mo
+Compile locale/ro/LC_MESSAGES/SABnzbd.mo
+Compile locale/ru/LC_MESSAGES/SABnzbd.mo
+Compile locale/sr/LC_MESSAGES/SABnzbd.mo
+Compile locale/sv/LC_MESSAGES/SABnzbd.mo
+Compile locale/zh_CN/LC_MESSAGES/SABnzbd.mo
+Remove temporary templates
+
+[INFO] Current git version is:
+git version 2.11.0
+[INFO] Checkout the latest nzbToMedia version ...
+[INFO] Autoupdate is active, try to pull the latest sources for nzbToMedia ...
+[INFO] ... current git status is
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working tree clean
+80c8ad58523ab99825c02f3855f9bd3dc9945d57
+[INFO] ... pulling sources
+Already up-to-date.
+[INFO] ... git status after update is
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working tree clean
+80c8ad58523ab99825c02f3855f9bd3dc9945d57
+[INFO] Launching SABnzbd ...
+```
