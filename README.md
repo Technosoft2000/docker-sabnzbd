@@ -71,9 +71,11 @@ docker create --name=sabnzbd --restart=always \
 [-v <your nzb blackhole folder>:/downloads/nzb \]
 [-v <your nzb backup folder>:/sabnzbd/nzbbackups \]
 [-e APP_REPO=https://github.com/sabnzbd/sabnzbd.git \]
-[-e APP_BRANCH=master \]
+[-e APP_BRANCH="master" \]
 [-e NZBTOMEDIA_REPO="https://github.com/clinton-hall/nzbToMedia.git" \]
 [-e NZBTOMEDIA_BRANCH="master" \]
+[-e PAR2_REPO="https://github.com/Parchive/par2cmdline.git" \]
+[-e PAR2_BRANCH="v0.7.1" \]
 [-e SET_CONTAINER_TIMEZONE=true \]
 [-e CONTAINER_TIMEZONE=<container timezone value> \]
 [-e PGID=<group ID (gid)> -e PUID=<user ID (uid)> \]
@@ -105,7 +107,7 @@ docker create --name=sabnzbd --restart=always \
 -v /volume1/downloads/incomplete:/downloads/incomplete \
 -v /volume1/downloads/nzb:/downloads/nzb \
 -v /volume1/downloads/nzbbackups:/sabnzbd/nzbbackups \
--e APP_BRANCH=1.1.x \
+-e APP_BRANCH=2.0.x \
 -e SET_CONTAINER_TIMEZONE=true \
 -e CONTAINER_TIMEZONE=Europe/Vienna \
 -e PGID=65539 -e PUID=1029 \
@@ -140,6 +142,8 @@ Accessing http://'host':8080 (e.g. http://192.168.0.10:8080) would then show you
 * `-e APP_BRANCH` - set which SABnzbd GitHub repository branch you want to use, __master__ (default branch), __0.7.x__, __1.0.x__, __1.1.x__, __develop__ - __optional__
 * `-e NZBTOMEDIA_REPO` - set it to the nzbToMedia GitHub repository; by default it uses "https://github.com/clinton-hall/nzbToMedia.git" - __optional__
 * `-e NZBTOMEDIA_BRANCH` - set it to the nzbToMedia GitHub repository branch you want to use, __master__ (default branch), __nightly__, __more-cleanup__, __dev__ - __optional__
+* `-e PAR2_REPO` - set it to the par2commandline GitHub repoitory; by default it uses "https://github.com/Parchive/par2cmdline.git" - __optional__
+* `-e PAR2_BRANCH` - set it to the par2commandline GitHub repository branch or tag you want to use, __master__, __v0.6.14__, __v0.7.1__ (default tag) - __optional__
 * `-e SET_CONTAINER_TIMEZONE` - set it to `true` if the specified `CONTAINER_TIMEZONE` should be used - __optional__
 * `-e CONTAINER_TIMEZONE` - container timezone as found under the directory `/usr/share/zoneinfo/` - __optional__
 * `-e PGID` for GroupID - see below for explanation - __optional__
