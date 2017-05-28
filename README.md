@@ -8,7 +8,7 @@
 
 ## SABnzbd - The automated Usenet download tool ##
 
-SABnzbd is an Open Source Binary Newsreader written in Python.
+[SABnzbd](https://sabnzbd.org/) is an Open Source Binary Newsreader written in Python.
 
 It's totally free, incredibly easy to use, and works practically everywhere.
 
@@ -19,59 +19,32 @@ If you want to know more you can head over to the SABnzbd website: http://sabnzb
 
 ## Updates ##
 
-**2017-03-11 - v1.1.3**
- * small update at Dockerfile
- * added instructions for Synology NAS users
+**2017-05-28 - v1.1.4**
 
-**2017-02-05 - v1.1.2**
- * created a special base image ```technosoft2000/alpine-base``` with a pre-define init process for easier image creation & maintenance
- * sabnzbd image is based now on ```technosoft2000/alpine-base:3.5-1.0.0```
- * version information at sabnzbd's ```version.py``` gets updated at container startup
- * __SABNZBD...__ environment variables are changed to __APP...__
- * it's also possible to use sabnzbd tags as __APP_BRANCH__ input to checkout a specific tagged version
+ * upgrade to __Alpine 3.6__ (new base image [technosoft2000/alpine-base:3.6-1](https://hub.docker.com/r/technosoft2000/alpine-base/))
+ * introduced new environment variables for __par2commandline__ (```PAR2_REPO``` and ```PAR2_BRANCH```)
+ * default version of [par2commandline](https://github.com/Parchive/par2cmdline) is now v0.7.1, 
+   if you need the latest version then start container with `-e PAR2_BRANCH=master`
+ * changed yenc implementation from [yenc-0.4.0](http://www.golug.it/pub/yenc/yenc-0.4.0.tar.gz) to ```sabyenc```
+ * added the optional dependency ```cryptography``` which requires the usage of ```openssl-dev``` instead of ```libressl-dev```, nevertheless [LibreSSL](https://www.libressl.org/) is still used at runtime
+ * added ignore files for Git and Docker
+ * tested with actual version [SABnzbd v2.0.1](https://github.com/sabnzbd/sabnzbd/releases/tag/2.0.1)
+ * Found modules are:
+```
+2017-05-28 12:31:16,531::INFO::[SABnzbd:407] SABYenc module (v3.0.2)... found!
+2017-05-28 12:31:16,532::INFO::[SABnzbd:424] Cryptography module (v1.8.2)... found!
+2017-05-28 12:31:16,533::INFO::[SABnzbd:429] par2 binary... found (/usr/local/bin/par2)
+2017-05-28 12:31:16,533::INFO::[SABnzbd:434] par2cmdline binary... found (/usr/local/bin/par2)
+2017-05-28 12:31:16,533::INFO::[SABnzbd:437] UNRAR binary... found (/usr/bin/unrar)
+2017-05-28 12:31:16,534::INFO::[SABnzbd:450] unzip binary... found (/usr/bin/unzip)
+2017-05-28 12:31:16,534::INFO::[SABnzbd:455] 7za binary... found (/usr/bin/7za)
+2017-05-28 12:31:16,535::INFO::[SABnzbd:461] nice binary... found (/bin/nice)
+2017-05-28 12:31:16,535::INFO::[SABnzbd:465] ionice binary... found (/bin/ionice)
+2017-05-28 12:31:16,535::INFO::[SABnzbd:1274] SSL version LibreSSL 2.5.4
+2017-05-28 12:31:16,536::INFO::[SABnzbd:1275] SSL supported protocols ['TLS v1.2', 'TLS v1.1', 'TLS v1']
+```
 
-**2017-01-05 - v1.1.1**
-
- * code clean-up and enhanced the start script
-  + new script ```checkout.sh``` used to clone & update sources via git, used for sabnzbd and nzbToMedia
- * new environment variables especially for nzbToMedia
-  + NZBTOMEDIA_REPO for nzbToMedia GitHub repository
-  + NZBTOMEDIA_BRANCH for nzbToMedia GitHub repository branch
- * upgrade of gosu from v1.9 to v1.10
- * __known issues__
-  + sabnzbd shows at branch 1.1.x as version 'develop', 
-    this is because of a unintended change at sabnzbd's ```version.py``` issued by a backport from the develop branch.
-    Nevertheless it is the right version after the git clone and this issue is only an cosmetic issue.
-
-**2017-01-04 - v1.1.0**
-
- * Upgrade from Alpine v3.4 to Alpine v3.5
-  + important is the switch from OpenSSL to LibreSSL
-  + glib 2.50.2
-  + better python3 support
- * added LABEL information at the *Dockerfile* which can be seen with ```docker inspect sabnzbd```
-  + ```image.version``` ... the current version number of the docker image e.g 1.1
-  + ```image.description``` ... a short description of the docker image
-  + ```image.date``` ... the creation/update date of the docker image e.g. 2017-01-04
-  + ```url.docker``` ... the docker registry URL from where the docker image is distributed
-  + ```url.github``` ... the github project URL of the docker image
-  + ```url.support``` ... the support forum URL where you can reach me
- * Enhanced the logging information at container startup
-  + on installation: git clone command is shown now with detailed information
-  + on update: git branch information and hash is shown before and after git pull
- * Added additional unpacker
-  + unzip
-  + tar
- * Added nzbToMedia from https://github.com/clinton-hall/nzbToMedia at ```/sabnzbd/config/scripts```
-  + includes ffmpeg & ffprobe support
-  + for configuration information look at https://github.com/clinton-hall/nzbToMedia/wiki/autoProcessMedia.cfg
-  + if you use for example ```-v /volume1/docker/apps/sabnzbd/config:/sabnzbd/config``` change into directory 
-    ```/volume1/docker/apps/sabnzbd/config/scripts``` to edit and configure autoProcessMedia.cfg
- * changed sabnzbd scripts volume from ```/sabnzbd/autoProcessScripts``` to ```/sabnzbd/config/scripts```
-
-**2016-12-09 - v1.0.0**
-
- * Fixed User & Group Name -> changed from 'sickrage' to 'sabnzbd' 
+For previous changes see at [full changelog](CHANGELOG.md).
 
 ## Features ##
 
@@ -285,7 +258,6 @@ docker start sabnzbd
 * analyze the log (stop it with CTRL+C)
 ```
 docker logs -f sabnzbd
-
         ,----,                                   
       ,/   .`|                                   
     ,`   .'  : .--.--.        ,----,        ,-.  
@@ -306,51 +278,40 @@ docker logs -f sabnzbd
       
       ~~~~~ SABnzbd  Standard-Edition ~~~~~
                                            
-[INFO] Docker image version: 1.1.2
+[INFO] Docker image version: 1.1.4
 [INFO] Create group sabnzbd with id 65539
 [INFO] Create user sabnzbd with id 1029
 [INFO] Current active timezone is UTC
-Sun Mar  5 21:53:39 CET 2017
+Sun May 28 12:30:47 CEST 2017
 [INFO] Container timezone is changed to: Europe/Vienna
 [INFO] Change the ownership of /sabnzbd (including subfolders) to sabnzbd:sabnzbd
 [INFO] Current git version is:
-git version 2.11.0
+git version 2.13.0
 [INFO] Checkout the latest SABnzbd version ...
-[INFO] ... git clone -b 1.2.x --single-branch https://github.com/sabnzbd/sabnzbd.git /sabnzbd/app -v
+[INFO] ... git clone -b 2.0.x --single-branch https://github.com/sabnzbd/sabnzbd.git /sabnzbd/app -v
 Cloning into '/sabnzbd/app'...
-POST git-upload-pack (165 bytes)
+POST git-upload-pack (189 bytes)
 [INFO] Autoupdate is active, try to pull the latest sources for SABnzbd ...
 [INFO] ... current git status is
-On branch 1.2.x
-Your branch is up-to-date with 'origin/1.2.x'.
+On branch 2.0.x
+Your branch is up-to-date with 'origin/2.0.x'.
 nothing to commit, working tree clean
-555d8418e72214673ebce774f1471852bd74c7d3
+e69eeebdd8dfaab47ff412baa88a72aeef84c2a4
 [INFO] ... pulling sources
 Already up-to-date.
 [INFO] ... git status after update is
-On branch 1.2.x
-Your branch is up-to-date with 'origin/1.2.x'.
+On branch 2.0.x
+Your branch is up-to-date with 'origin/2.0.x'.
 nothing to commit, working tree clean
-555d8418e72214673ebce774f1471852bd74c7d3
+e69eeebdd8dfaab47ff412baa88a72aeef84c2a4
 [INFO] ... configure version.py
-[INFO] ... SABnzbd version: 1.2.x [555d8418]
+[INFO] ... SABnzbd version: 2.0.x [e69eeebd]
 [INFO] ... build multi-language support
 Email MO files
 Compile locale/da/LC_MESSAGES/SABemail.mo
 Compile locale/de/LC_MESSAGES/SABemail.mo
 Compile locale/en/LC_MESSAGES/SABemail.mo
 Compile locale/es/LC_MESSAGES/SABemail.mo
-Compile locale/fi/LC_MESSAGES/SABemail.mo
-Compile locale/fr/LC_MESSAGES/SABemail.mo
-Compile locale/nb/LC_MESSAGES/SABemail.mo
-Compile locale/nl/LC_MESSAGES/SABemail.mo
-Compile locale/pl/LC_MESSAGES/SABemail.mo
-Compile locale/pt_BR/LC_MESSAGES/SABemail.mo
-Compile locale/ro/LC_MESSAGES/SABemail.mo
-Compile locale/ru/LC_MESSAGES/SABemail.mo
-Compile locale/sr/LC_MESSAGES/SABemail.mo
-Compile locale/sv/LC_MESSAGES/SABemail.mo
-Compile locale/zh_CN/LC_MESSAGES/SABemail.mo
 Create email templates from MO files
 Create email template for da
 Create email template for de
@@ -359,11 +320,6 @@ Create email template for fi
 Create email template for fr
 Create email template for nb
 Create email template for nl
-Create email template for pl
-Create email template for pt_BR
-Create email template for ro
-Create email template for ru
-Create email template for sr
 Create email template for sv
 Create email template for zh_CN
 Main program MO files
@@ -385,7 +341,7 @@ Compile locale/zh_CN/LC_MESSAGES/SABnzbd.mo
 Remove temporary templates
 
 [INFO] Current git version is:
-git version 2.11.0
+git version 2.13.0
 [INFO] Checkout the latest nzbToMedia version ...
 [INFO] Autoupdate is active, try to pull the latest sources for nzbToMedia ...
 [INFO] ... current git status is
@@ -398,7 +354,46 @@ Already up-to-date.
 [INFO] ... git status after update is
 On branch master
 Your branch is up-to-date with 'origin/master'.
-nothing to commit, working tree clean
-80c8ad58523ab99825c02f3855f9bd3dc9945d57
-[INFO] Launching SABnzbd ...
+2017-05-28 12:31:16,344::INFO::[SABnzbd:1167] --------------------------------
+2017-05-28 12:31:16,345::INFO::[SABnzbd:1168] SABnzbd.py-2.0.x (rev=e69eeebdd8dfaab47ff412baa88a72aeef84c2a4)
+2017-05-28 12:31:16,346::INFO::[SABnzbd:1169] Full executable path = /sabnzbd/app/SABnzbd.py
+2017-05-28 12:31:16,346::INFO::[SABnzbd:1181] Platform = posix
+2017-05-28 12:31:16,347::INFO::[SABnzbd:1182] Python-version = 2.7.13 (default, Apr 20 2017, 12:13:37) 
+[GCC 6.3.0]
+2017-05-28 12:31:16,348::INFO::[SABnzbd:1183] Arguments = /sabnzbd/app/SABnzbd.py -f /sabnzbd/config -s 0.0.0.0:8080
+2017-05-28 12:31:16,348::INFO::[SABnzbd:1188] Preferred encoding = UTF-8
+2017-05-28 12:31:16,349::INFO::[SABnzbd:1229] Read INI file /sabnzbd/config/sabnzbd.ini
+2017-05-28 12:31:16,375::INFO::[__init__:995] Loading data for rss_data.sab from /sabnzbd/config/admin/rss_data.sab
+2017-05-28 12:31:16,389::INFO::[__init__:995] Loading data for totals10.sab from /sabnzbd/config/admin/totals10.sab
+2017-05-28 12:31:16,390::INFO::[postproc:95] Loading postproc queue
+2017-05-28 12:31:16,391::INFO::[__init__:995] Loading data for postproc2.sab from /sabnzbd/config/admin/postproc2.sab
+2017-05-28 12:31:16,392::INFO::[__init__:995] Loading data for queue10.sab from /sabnzbd/config/admin/queue10.sab
+2017-05-28 12:31:16,399::INFO::[__init__:995] Loading data for watched_data2.sab from /sabnzbd/config/admin/watched_data2.sab
+2017-05-28 12:31:16,401::INFO::[__init__:995] Loading data for Rating.sab from /sabnzbd/config/admin/Rating.sab
+2017-05-28 12:31:16,401::INFO::[__init__:998] /sabnzbd/config/admin/Rating.sab missing
+2017-05-28 12:31:16,402::INFO::[scheduler:197] Setting schedule for midnight BPS reset
+2017-05-28 12:31:16,466::INFO::[__init__:351] All processes started
+2017-05-28 12:31:16,466::INFO::[SABnzbd:283] Web dir is /sabnzbd/app/interfaces/Plush
+2017-05-28 12:31:16,467::INFO::[SABnzbd:283] Web dir is /sabnzbd/app/interfaces/Config
+2017-05-28 12:31:16,531::INFO::[SABnzbd:407] SABYenc module (v3.0.2)... found!
+2017-05-28 12:31:16,532::INFO::[SABnzbd:424] Cryptography module (v1.8.2)... found!
+2017-05-28 12:31:16,533::INFO::[SABnzbd:429] par2 binary... found (/usr/local/bin/par2)
+2017-05-28 12:31:16,533::INFO::[SABnzbd:434] par2cmdline binary... found (/usr/local/bin/par2)
+2017-05-28 12:31:16,533::INFO::[SABnzbd:437] UNRAR binary... found (/usr/bin/unrar)
+2017-05-28 12:31:16,534::INFO::[SABnzbd:450] unzip binary... found (/usr/bin/unzip)
+2017-05-28 12:31:16,534::INFO::[SABnzbd:455] 7za binary... found (/usr/bin/7za)
+2017-05-28 12:31:16,535::INFO::[SABnzbd:461] nice binary... found (/bin/nice)
+2017-05-28 12:31:16,535::INFO::[SABnzbd:465] ionice binary... found (/bin/ionice)
+2017-05-28 12:31:16,535::INFO::[SABnzbd:1274] SSL version LibreSSL 2.5.4
+2017-05-28 12:31:16,536::INFO::[SABnzbd:1275] SSL supported protocols ['TLS v1.2', 'TLS v1.1', 'TLS v1']
+2017-05-28 12:31:16,539::INFO::[SABnzbd:1386] Starting web-interface on 0.0.0.0:8080
+2017-05-28 12:31:16,540::INFO::[_cplogging:219] [28/May/2017:12:31:16] ENGINE Bus STARTING
+2017-05-28 12:31:16,551::INFO::[_cplogging:219] [28/May/2017:12:31:16] ENGINE Started monitor thread '_TimeoutMonitor'.
+2017-05-28 12:31:16,904::INFO::[_cplogging:219] [28/May/2017:12:31:16] ENGINE Serving on http://0.0.0.0:8080
+2017-05-28 12:31:16,905::INFO::[_cplogging:219] [28/May/2017:12:31:16] ENGINE Bus STARTED
+2017-05-28 12:31:16,906::INFO::[zconfig:64] No Bonjour/ZeroConfig support installed
+2017-05-28 12:31:16,906::INFO::[SABnzbd:1424] Starting SABnzbd.py-2.0.x
+2017-05-28 12:31:16,909::INFO::[postproc:176] Completed Download Folder /downloads/complete is not on FAT
+2017-05-28 12:31:16,911::INFO::[dirscanner:316] Dirscanner starting up
+2017-05-28 12:31:16,912::INFO::[urlgrabber:72] URLGrabber starting up
 ```

@@ -1,8 +1,8 @@
-FROM technosoft2000/alpine-base:3.5-1.0.0
+FROM technosoft2000/alpine-base:3.6-1
 MAINTAINER Technosoft2000 <technosoft2000@gmx.net>
-LABEL image.version="1.1.3" \
+LABEL image.version="1.1.4" \
       image.description="Docker image for SABnzbd, based on docker image of Alpine" \
-      image.date="2017-03-11" \
+      image.date="2017-05-28" \
       url.docker="https://hub.docker.com/r/technosoft2000/sabnzbd" \
       url.github="https://github.com/Technosoft2000/docker-sabnzbd" \
       url.support="https://cytec.us/forum"
@@ -10,7 +10,7 @@ LABEL image.version="1.1.3" \
 # Set basic environment settings
 ENV \
     # - VERSION: the docker image version (corresponds to the above LABEL image.version)
-    VERSION="1.1.3" \
+    VERSION="1.1.4" \
     
     # - PUSER, PGROUP: the APP user and group name
     PUSER="sabnzbd" \
@@ -23,7 +23,7 @@ ENV \
     APP_HOME="/sabnzbd" \
 
     # - APP_REPO, APP_BRANCH: the APP GitHub repository and related branch
-    # for related branch or tag use e.g. master, 0.7.x, 1.0.x, 1.1.x, 1.2.x, develop, ...
+    # for related branch or tag use e.g. master, 0.7.x, 1.0.x, 1.1.x, 1.2.x, 2.0.x, develop, ...
     APP_REPO="https://github.com/sabnzbd/sabnzbd.git" \
     APP_BRANCH="master" \
 
@@ -35,10 +35,15 @@ ENV \
     NZBTOMEDIA_BRANCH="master" \
 
     # - PKG_*: the needed applications for installation
-    PKG_DEV="make gcc g++ automake autoconf python-dev libressl-dev libffi-dev" \
+    PKG_DEV="make gcc g++ automake autoconf python-dev openssl-dev libffi-dev" \
     PKG_PYTHON="ca-certificates py2-pip python py-libxml2 py-lxml" \
     PKG_COMPRESS="unrar unzip tar p7zip" \
-    PKG_ADDONS="ffmpeg"
+    PKG_ADDONS="ffmpeg" \
+
+    # - PAR2_*: par2commandline GitHub repository and related branch
+    # for related branch or tag use e.g. master, ..., v0.6.14, v0.7.0, v0.7.1, ...
+    PAR2_REPO="https://github.com/Parchive/par2cmdline.git" \
+    PAR2_BRANCH="v0.7.1"
 
 RUN \
     # create temporary directories
@@ -52,7 +57,7 @@ RUN \
     apk -U add --no-cache $PKG_DEV $PKG_PYTHON $PKG_COMPRESS $PKG_ADDONS && \
 
     # install par2
-    git clone --depth 1 https://github.com/Parchive/par2cmdline.git && \
+    git clone -b $PAR2_BRANCH --single-branch --depth 1 $PAR2_REPO && \
     cd /par2cmdline && \
     aclocal && \
     automake --add-missing && \
@@ -68,7 +73,8 @@ RUN \
     pip --no-cache-dir install --upgrade pip && \
     pip --no-cache-dir install --upgrade setuptools && \
     pip --no-cache-dir install --upgrade pyopenssl cheetah requirements requests && \
-    pip install http://www.golug.it/pub/yenc/yenc-0.4.0.tar.gz && \
+    pip --no-cache-dir install --upgrade sabyenc cryptography && \
+    #pip install http://www.golug.it/pub/yenc/yenc-0.4.0.tar.gz && \
 
     # remove not needed packages
     apk del $PKG_DEV && \
