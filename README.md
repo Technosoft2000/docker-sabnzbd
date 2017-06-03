@@ -19,6 +19,11 @@ If you want to know more you can head over to the SABnzbd website: http://sabnzb
 
 ## Updates ##
 
+**2017-06-03 - v1.1.5**
+
+ * upgrade to new base image [technosoft2000/alpine-base:3.6-2](https://hub.docker.com/r/technosoft2000/alpine-base/)
+ * supports now __PGID__ < 1000
+
 **2017-05-28 - v1.1.4**
 
  * upgrade to __Alpine 3.6__ (new base image [technosoft2000/alpine-base:3.6-1](https://hub.docker.com/r/technosoft2000/alpine-base/))
