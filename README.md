@@ -19,35 +19,23 @@ If you want to know more you can head over to the SABnzbd website: http://sabnzb
 
 ## Updates ##
 
-**2017-06-03 - v1.1.5**
+**2017-06-14 - v1.1.6**
 
- * upgrade to new base image [technosoft2000/alpine-base:3.6-2](https://hub.docker.com/r/technosoft2000/alpine-base/)
- * supports now __PGID__ < 1000
+ - **___HTTPS___**
 
-**2017-05-28 - v1.1.4**
+   - Log output shows now: 
+   ```
+   2017-06-14 17:08:34,788::INFO::[misc:1236] Self-signed certificates generated successfully
+   ```
+   - Self-signed certificate creation via SABnzbd is working now, 
+     btw. Chrome warns that this certificate is of course insecure
 
- * upgrade to __Alpine 3.6__ (new base image [technosoft2000/alpine-base:3.6-1](https://hub.docker.com/r/technosoft2000/alpine-base/))
- * introduced new environment variables for __par2commandline__ (```PAR2_REPO``` and ```PAR2_BRANCH```)
- * default version of [par2commandline](https://github.com/Parchive/par2cmdline) is now v0.7.1, 
-   if you need the latest version then start container with `-e PAR2_BRANCH=master`
- * changed yenc implementation from [yenc-0.4.0](http://www.golug.it/pub/yenc/yenc-0.4.0.tar.gz) to ```sabyenc```
- * added the optional dependency ```cryptography``` which requires the usage of ```openssl-dev``` instead of ```libressl-dev```, nevertheless [LibreSSL](https://www.libressl.org/) is still used at runtime
- * added ignore files for Git and Docker
- * tested with actual version [SABnzbd v2.0.1](https://github.com/sabnzbd/sabnzbd/releases/tag/2.0.1)
- * Found modules are:
-```
-2017-05-28 12:31:16,531::INFO::[SABnzbd:407] SABYenc module (v3.0.2)... found!
-2017-05-28 12:31:16,532::INFO::[SABnzbd:424] Cryptography module (v1.8.2)... found!
-2017-05-28 12:31:16,533::INFO::[SABnzbd:429] par2 binary... found (/usr/local/bin/par2)
-2017-05-28 12:31:16,533::INFO::[SABnzbd:434] par2cmdline binary... found (/usr/local/bin/par2)
-2017-05-28 12:31:16,533::INFO::[SABnzbd:437] UNRAR binary... found (/usr/bin/unrar)
-2017-05-28 12:31:16,534::INFO::[SABnzbd:450] unzip binary... found (/usr/bin/unzip)
-2017-05-28 12:31:16,534::INFO::[SABnzbd:455] 7za binary... found (/usr/bin/7za)
-2017-05-28 12:31:16,535::INFO::[SABnzbd:461] nice binary... found (/bin/nice)
-2017-05-28 12:31:16,535::INFO::[SABnzbd:465] ionice binary... found (/bin/ionice)
-2017-05-28 12:31:16,535::INFO::[SABnzbd:1274] SSL version LibreSSL 2.5.4
-2017-05-28 12:31:16,536::INFO::[SABnzbd:1275] SSL supported protocols ['TLS v1.2', 'TLS v1.1', 'TLS v1']
-```
+ - **___par2cmdline___**
+
+   - upgrade to v0.7.2 as default version
+   - added missing library ```libgomp``` which is needed for correct execution of par2cmdline
+   - added 'make check' at build process of par2cmdline to get early feedback that the command works correct
+   - for more information look at https://sabnzbd.org/wiki/installation/multicore-par2
 
 For previous changes see at [full changelog](CHANGELOG.md).
 
@@ -63,6 +51,24 @@ For previous changes see at [full changelog](CHANGELOG.md).
    + 7Zip archives via ```p7zip```
  * usage of the latest par2 repair utility via ```par2cmdline``` of master branch from https://github.com/Parchive/par2cmdline
  * support of nzbToMedia post-processing scripts from https://github.com/clinton-hall/nzbToMedia
+
+## Hints & Tips ##
+ 
+### HTTPS ###
+To turn on access using HTTPS, you need enable HTTPS in `Config->General`,
+look at [sabnzbd/wiki](https://sabnzbd.org/wiki/configuration/2.1/general#toc1)
+
+Tested with the following settings at SABnzbd interface
+ - ___HTTPS-Port___: 9090
+ - ___HTTPS-Certificate___: cert.pem
+ - ___HTTPS-Key___: privkey.pem
+ - ___HTTPS-Chain Certificate___: chain.pem
+ 
+For more details about SABnzbd and HTTPS look at:
+https://sabnzbd.org/wiki/advanced/https
+ 
+I suggest to use an additional NGINX or Apache HTTP Server as Reverse-Proxy, 
+e.g see [jwilder/nginx-proxy](https://hub.docker.com/r/jwilder/nginx-proxy/)
 
 ## Usage ##
 

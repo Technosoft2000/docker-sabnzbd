@@ -1,8 +1,31 @@
+**2017-06-14 - v1.1.6**
+
+ - **___HTTPS___**
+
+   - Log output shows now: 
+   ```
+   2017-06-14 17:08:34,788::INFO::[misc:1236] Self-signed certificates generated successfully
+   ```
+   - Self-signed certificate creation via SABnzbd is working now, 
+     btw. Chrome warns that this certificate is of course insecure
+
+ - **___par2cmdline___**
+
+   - upgrade to v0.7.2 as default version
+   - added missing library ```libgomp``` which is needed for correct execution of par2cmdline
+   - added 'make check' at build process of par2cmdline to get early feedback that the command works correct
+   - for more information look at https://sabnzbd.org/wiki/installation/multicore-par2
+
+**2017-06-03 - v1.1.5**
+
+ * upgrade to new base image [technosoft2000/alpine-base:3.6-2](https://hub.docker.com/r/technosoft2000/alpine-base/)
+ * supports now __PGID__ < 1000
+
 **2017-05-28 - v1.1.4**
 
  * upgrade to __Alpine 3.6__ (new base image [technosoft2000/alpine-base:3.6-1](https://hub.docker.com/r/technosoft2000/alpine-base/))
- * introduced new environment variables for __par2commandline__ (```PAR2_REPO``` and ```PAR2_BRANCH```)
- * default version of [par2commandline](https://github.com/Parchive/par2cmdline) is now v0.7.1, 
+ * introduced new environment variables for __par2cmdline__ (```PAR2_REPO``` and ```PAR2_BRANCH```)
+ * default version of [par2cmdline](https://github.com/Parchive/par2cmdline) is now v0.7.1, 
    if you need the latest version then start container with `-e PAR2_BRANCH=master`
  * changed yenc implementation from [yenc-0.4.0](http://www.golug.it/pub/yenc/yenc-0.4.0.tar.gz) to ```sabyenc```
  * added the optional dependency ```cryptography``` which requires the usage of ```openssl-dev``` instead of ```libressl-dev```, nevertheless [LibreSSL](https://www.libressl.org/) is still used at runtime
