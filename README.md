@@ -19,23 +19,23 @@ If you want to know more you can head over to the SABnzbd website: http://sabnzb
 
 ## Updates ##
 
-**2017-06-14 - v1.1.6**
+**2017-10-21 - v1.1.7**
 
- - **___HTTPS___**
+ - bugfix to support latest SABnzbd v2.3.0 with the usage of [sabyenc 3.3.1](https://sabnzbd.org/wiki/installation/sabyenc.html)
+ - upgrade ___par2cmdline___ to v0.7.4 as default version
+ - bugfix so that source update via `git` works again - issue because of patched `version.py`
 
-   - Log output shows now: 
-   ```
-   2017-06-14 17:08:34,788::INFO::[misc:1236] Self-signed certificates generated successfully
-   ```
-   - Self-signed certificate creation via SABnzbd is working now, 
-     btw. Chrome warns that this certificate is of course insecure
-
- - **___par2cmdline___**
-
-   - upgrade to v0.7.2 as default version
-   - added missing library ```libgomp``` which is needed for correct execution of par2cmdline
-   - added 'make check' at build process of par2cmdline to get early feedback that the command works correct
-   - for more information look at https://sabnzbd.org/wiki/installation/multicore-par2
+```
+2017-10-21 18:01:29,005::INFO::[SABnzbd:404] SABYenc module (v3.3.1)... found!
+2017-10-21 18:01:29,006::INFO::[SABnzbd:421] Cryptography module (v2.1.1)... found!
+2017-10-21 18:01:29,006::INFO::[SABnzbd:426] par2 binary... found (/usr/local/bin/par2)
+2017-10-21 18:01:29,007::INFO::[SABnzbd:436] UNRAR binary... found (/usr/bin/unrar)
+2017-10-21 18:01:29,007::INFO::[SABnzbd:444] UNRAR binary version 5.40
+2017-10-21 18:01:29,008::INFO::[SABnzbd:449] unzip binary... found (/usr/bin/unzip)
+2017-10-21 18:01:29,008::INFO::[SABnzbd:454] 7za binary... found (/usr/bin/7za)
+2017-10-21 18:01:29,008::INFO::[SABnzbd:460] nice binary... found (/bin/nice)
+2017-10-21 18:01:29,009::INFO::[SABnzbd:464] ionice binary... found (/bin/ionice)
+```
 
 For previous changes see at [full changelog](CHANGELOG.md).
 

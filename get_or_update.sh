@@ -4,11 +4,15 @@
 
 # download the latest version of the SABnzbd
 # see at https://github.com/sabnzbd/sabnzbd
+APP_VERSION_FILE=$APP_HOME/app/sabnzbd/version.py
+if [ -f $APP_VERSION_FILE ]; then
+   echo "[INFO] Revert the patched $APP_VERSION_FILE to have the possibility to get the updated sources"
+   gosu $PUSER:$PGROUP bash -c "git checkout -- $APP_VERSION_FILE"
+fi
 source /init/checkout.sh "$APP_NAME" "$APP_BRANCH" "$APP_REPO" "$APP_HOME/app"
 
 # update the version information at SABnzbd
-echo "[INFO] ... configure version.py"
-APP_VERSION_FILE=$APP_HOME/app/sabnzbd/version.py
+echo "[INFO] ... update the version information at SABnzbd - patching $APP_VERSION_FILE"
 sed -i -e 's/__version__ = ".*"/__version__ = "'$APP_BRANCH'"/g' $APP_VERSION_FILE
 APP_VERSION_HASH_LONG=`git rev-parse HEAD`
 APP_VERSION_HASH_SHORT=`git rev-parse --short HEAD`
