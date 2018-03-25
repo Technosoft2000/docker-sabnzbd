@@ -19,23 +19,10 @@ If you want to know more you can head over to the SABnzbd website: http://sabnzb
 
 ## Updates ##
 
-**2017-10-21 - v1.1.7**
-
- - bugfix to support latest SABnzbd v2.3.0 with the usage of [sabyenc 3.3.1](https://sabnzbd.org/wiki/installation/sabyenc.html)
- - upgrade ___par2cmdline___ to v0.7.4 as default version
- - bugfix so that source update via `git` works again - issue because of patched `version.py`
-
-```
-2017-10-21 18:01:29,005::INFO::[SABnzbd:404] SABYenc module (v3.3.1)... found!
-2017-10-21 18:01:29,006::INFO::[SABnzbd:421] Cryptography module (v2.1.1)... found!
-2017-10-21 18:01:29,006::INFO::[SABnzbd:426] par2 binary... found (/usr/local/bin/par2)
-2017-10-21 18:01:29,007::INFO::[SABnzbd:436] UNRAR binary... found (/usr/bin/unrar)
-2017-10-21 18:01:29,007::INFO::[SABnzbd:444] UNRAR binary version 5.40
-2017-10-21 18:01:29,008::INFO::[SABnzbd:449] unzip binary... found (/usr/bin/unzip)
-2017-10-21 18:01:29,008::INFO::[SABnzbd:454] 7za binary... found (/usr/bin/7za)
-2017-10-21 18:01:29,008::INFO::[SABnzbd:460] nice binary... found (/bin/nice)
-2017-10-21 18:01:29,009::INFO::[SABnzbd:464] ionice binary... found (/bin/ionice)
-```
+**2018-03-25 - v1.1.8**
+ 
+ * upgrade to latest base image [technosoft2000/alpine-base:3.6-3](https://hub.docker.com/r/technosoft2000/alpine-base/)
+ * upgrade ___par2cmdline___ to v0.8.0 as default version
 
 For previous changes see at [full changelog](CHANGELOG.md).
 

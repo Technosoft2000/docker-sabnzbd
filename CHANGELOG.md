@@ -1,3 +1,8 @@
+**2018-03-25 - v1.1.8**
+ 
+ * upgrade to latest base image [technosoft2000/alpine-base:3.6-3](https://hub.docker.com/r/technosoft2000/alpine-base/)
+ * upgrade ___par2cmdline___ to v0.8.0 as default version
+
 **2017-10-21 - v1.1.7**
 
  - bugfix to support latest SABnzbd v2.3.0 with the usage of [sabyenc 3.3.1](https://sabnzbd.org/wiki/installation/sabyenc.html)

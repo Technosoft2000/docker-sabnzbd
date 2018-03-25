@@ -1,8 +1,8 @@
-FROM technosoft2000/alpine-base:3.6-2
+FROM technosoft2000/alpine-base:3.6-3
 MAINTAINER Technosoft2000 <technosoft2000@gmx.net>
-LABEL image.version="1.1.7" \
+LABEL image.version="1.1.8" \
       image.description="Docker image for SABnzbd, based on docker image of Alpine" \
-      image.date="2017-10-21" \
+      image.date="2018-03-25" \
       url.docker="https://hub.docker.com/r/technosoft2000/sabnzbd" \
       url.github="https://github.com/Technosoft2000/docker-sabnzbd" \
       url.support="https://cytec.us/forum"
@@ -10,7 +10,7 @@ LABEL image.version="1.1.7" \
 # Set basic environment settings
 ENV \
     # - VERSION: the docker image version (corresponds to the above LABEL image.version)
-    VERSION="1.1.7" \
+    VERSION="1.1.8" \
     
     # - PUSER, PGROUP: the APP user and group name
     PUSER="sabnzbd" \
@@ -44,7 +44,7 @@ ENV \
     # - PAR2_*: par2commandline GitHub repository and related branch
     # for related branch or tag use e.g. master, ..., v0.6.14, v0.7.0, v0.7.1, ...
     PAR2_REPO="https://github.com/Parchive/par2cmdline.git" \
-    PAR2_BRANCH="v0.7.4"
+    PAR2_BRANCH="v0.8.0"
 
 RUN \
     # create temporary directories
