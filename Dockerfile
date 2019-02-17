@@ -1,8 +1,8 @@
-FROM technosoft2000/alpine-base:3.8-1
+FROM technosoft2000/alpine-base:3.9-1
 MAINTAINER Technosoft2000 <technosoft2000@gmx.net>
-LABEL image.version="1.2.0" \
+LABEL image.version="1.3.0" \
       image.description="Docker image for SABnzbd, based on docker image of Alpine" \
-      image.date="2018-12-15" \
+      image.date="2019-02-17" \
       url.docker="https://hub.docker.com/r/technosoft2000/sabnzbd" \
       url.github="https://github.com/Technosoft2000/docker-sabnzbd" \
       url.support="https://cytec.us/forum"
@@ -10,7 +10,7 @@ LABEL image.version="1.2.0" \
 # Set basic environment settings
 ENV \
     # - VERSION: the docker image version (corresponds to the above LABEL image.version)
-    VERSION="1.2.0" \
+    VERSION="1.3.0" \
     
     # - PUSER, PGROUP: the APP user and group name
     PUSER="sabnzbd" \

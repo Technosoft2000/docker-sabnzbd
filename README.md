@@ -19,14 +19,9 @@ If you want to know more you can head over to the SABnzbd website: http://sabnzb
 
 ## Updates ##
 
-**2018-12-15 - v1.2.0**
- 
- * upgrade to latest base image [technosoft2000/alpine-base:3.8-1](https://hub.docker.com/r/technosoft2000/alpine-base/)
+**2019-02-17 - v1.3.0**
 
-**2018-03-25 - v1.1.8**
- 
- * upgrade to latest base image [technosoft2000/alpine-base:3.6-3](https://hub.docker.com/r/technosoft2000/alpine-base/)
- * upgrade ___par2cmdline___ to v0.8.0 as default version
+ * upgrade to latest base image [technosoft2000/alpine-base:3.9-1](https://hub.docker.com/r/technosoft2000/alpine-base/)
 
 For previous changes see at [full changelog](CHANGELOG.md).
 
