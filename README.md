@@ -19,6 +19,13 @@ If you want to know more you can head over to the SABnzbd website: http://sabnzb
 
 ## Updates ##
 
+**2020-01-01 - v1.4.0**
+
+ * upgrade to latest base image [technosoft2000/alpine-base:3.11-1](https://hub.docker.com/r/technosoft2000/alpine-base/) based on Alpine 3.11.2
+ * changed to Python 3 and to the SABnzbd `develop` branch
+ * IMPORTANT: only Python 3 versions of SABnzbd are supported by this image, at the moment only the `py3` and `develop` branch
+ * fixed empty continuation line
+
 **2019-02-17 - v1.3.0**
 
  * upgrade to latest base image [technosoft2000/alpine-base:3.9-1](https://hub.docker.com/r/technosoft2000/alpine-base/)
@@ -68,11 +75,11 @@ docker create --name=sabnzbd --restart=always \
 [-v <your nzb blackhole folder>:/downloads/nzb \]
 [-v <your nzb backup folder>:/sabnzbd/nzbbackups \]
 [-e APP_REPO=https://github.com/sabnzbd/sabnzbd.git \]
-[-e APP_BRANCH="master" \]
+[-e APP_BRANCH="develop" \]
 [-e NZBTOMEDIA_REPO="https://github.com/clinton-hall/nzbToMedia.git" \]
-[-e NZBTOMEDIA_BRANCH="master" \]
+[-e NZBTOMEDIA_BRANCH="develop" \]
 [-e PAR2_REPO="https://github.com/Parchive/par2cmdline.git" \]
-[-e PAR2_BRANCH="v0.7.1" \]
+[-e PAR2_BRANCH="v0.8.0" \]
 [-e SET_CONTAINER_TIMEZONE=true \]
 [-e CONTAINER_TIMEZONE=<container timezone value> \]
 [-e PGID=<group ID (gid)> -e PUID=<user ID (uid)> \]
@@ -104,7 +111,7 @@ docker create --name=sabnzbd --restart=always \
 -v /volume1/downloads/incomplete:/downloads/incomplete \
 -v /volume1/downloads/nzb:/downloads/nzb \
 -v /volume1/downloads/nzbbackups:/sabnzbd/nzbbackups \
--e APP_BRANCH=2.0.x \
+-e APP_BRANCH=develop \
 -e SET_CONTAINER_TIMEZONE=true \
 -e CONTAINER_TIMEZONE=Europe/Vienna \
 -e PGID=65539 -e PUID=1029 \
@@ -259,142 +266,157 @@ docker start sabnzbd
 * analyze the log (stop it with CTRL+C)
 ```
 docker logs -f sabnzbd
-        ,----,                                   
-      ,/   .`|                                   
-    ,`   .'  : .--.--.        ,----,        ,-.  
-  ;    ;     //  /    '.    .'   .' \   ,--/ /|  
-.'___,/    ,'|  :  /`. /  ,----,'    |,--. :/ |  
-|    :     | ;  |  |--`   |    :  .  ;:  : ' /   
-;    |.';  ; |  :  ;_     ;    |.'  / |  '  /    
-`----'  |  |  \  \    `.  `----'/  ;  '  |  :    
-    '   :  ;   `----.   \   /  ;  /   |  |   \   
-    |   |  '   __ \  \  |  ;  /  /-,  '  : |. \  
-    '   :  |  /  /`--'  / /  /  /.`|  |  | ' \ \ 
-    ;   |.'  '--'.     /./__;      :  '  : |--'  
-    '---'      `--'---' |   :    .'   ;  |,'     
-                        ;   | .'      '--'       
-                        `---'                    
+        ,----,
+      ,/   .`|
+    ,`   .'  : .--.--.        ,----,        ,-.
+  ;    ;     //  /    '.    .'   .' \   ,--/ /|
+.'___,/    ,'|  :  /`. /  ,----,'    |,--. :/ |
+|    :     | ;  |  |--`   |    :  .  ;:  : ' /
+;    |.';  ; |  :  ;_     ;    |.'  / |  '  /
+`----'  |  |  \  \    `.  `----'/  ;  '  |  :
+    '   :  ;   `----.   \   /  ;  /   |  |   \
+    |   |  '   __ \  \  |  ;  /  /-,  '  : |. \
+    '   :  |  /  /`--'  / /  /  /.`|  |  | ' \ \
+    ;   |.'  '--'.     /./__;      :  '  : |--'
+    '---'      `--'---' |   :    .'   ;  |,'
+                        ;   | .'      '--'
+                        `---'
 
       PRESENTS ANOTHER AWESOME DOCKER IMAGE
-      
+
       ~~~~~ SABnzbd  Standard-Edition ~~~~~
-                                           
-[INFO] Docker image version: 1.1.4
+
+[INFO] Docker image version: 1.4.0
+[INFO] Alpine Linux version: 3.11.2
 [INFO] Create group sabnzbd with id 65539
 [INFO] Create user sabnzbd with id 1029
 [INFO] Current active timezone is UTC
-Sun May 28 12:30:47 CEST 2017
+Wed Jan  1 18:13:32 CET 2020
 [INFO] Container timezone is changed to: Europe/Vienna
 [INFO] Change the ownership of /sabnzbd (including subfolders) to sabnzbd:sabnzbd
 [INFO] Current git version is:
-git version 2.13.0
+git version 2.24.1
 [INFO] Checkout the latest SABnzbd version ...
-[INFO] ... git clone -b 2.0.x --single-branch https://github.com/sabnzbd/sabnzbd.git /sabnzbd/app -v
+[INFO] ... git clone -b develop --single-branch https://github.com/sabnzbd/sabnzbd.git /sabnzbd/app -v
 Cloning into '/sabnzbd/app'...
 POST git-upload-pack (189 bytes)
 [INFO] Autoupdate is active, try to pull the latest sources for SABnzbd ...
 [INFO] ... current git status is
-On branch 2.0.x
-Your branch is up-to-date with 'origin/2.0.x'.
+On branch develop
+Your branch is up to date with 'origin/develop'.
+
 nothing to commit, working tree clean
-e69eeebdd8dfaab47ff412baa88a72aeef84c2a4
+17719b1b5bfec074ec30bb633eb956d2a27c2d6c
 [INFO] ... pulling sources
-Already up-to-date.
+Already up to date.
 [INFO] ... git status after update is
-On branch 2.0.x
-Your branch is up-to-date with 'origin/2.0.x'.
+On branch develop
+Your branch is up to date with 'origin/develop'.
+
 nothing to commit, working tree clean
-e69eeebdd8dfaab47ff412baa88a72aeef84c2a4
-[INFO] ... configure version.py
-[INFO] ... SABnzbd version: 2.0.x [e69eeebd]
+17719b1b5bfec074ec30bb633eb956d2a27c2d6c
+[INFO] ... update the version information at SABnzbd - patching /sabnzbd/app/sabnzbd/version.py
+[INFO] ... SABnzbd version: develop [17719b1b]
 [INFO] ... build multi-language support
 Email MO files
-Compile locale/da/LC_MESSAGES/SABemail.mo
-Compile locale/de/LC_MESSAGES/SABemail.mo
-Compile locale/en/LC_MESSAGES/SABemail.mo
 Compile locale/es/LC_MESSAGES/SABemail.mo
+Compile locale/fr/LC_MESSAGES/SABemail.mo
+Compile locale/nb/LC_MESSAGES/SABemail.mo
+Compile locale/fi/LC_MESSAGES/SABemail.mo
+Compile locale/ro/LC_MESSAGES/SABemail.mo
+Compile locale/pt_BR/LC_MESSAGES/SABemail.mo
+Compile locale/da/LC_MESSAGES/SABemail.mo
+Compile locale/nl/LC_MESSAGES/SABemail.mo
+Compile locale/sv/LC_MESSAGES/SABemail.mo
+Compile locale/he/LC_MESSAGES/SABemail.mo
+Compile locale/zh_CN/LC_MESSAGES/SABemail.mo
+Compile locale/en/LC_MESSAGES/SABemail.mo
+Compile locale/sr/LC_MESSAGES/SABemail.mo
+Compile locale/de/LC_MESSAGES/SABemail.mo
+Compile locale/ru/LC_MESSAGES/SABemail.mo
+Compile locale/pl/LC_MESSAGES/SABemail.mo
 Create email templates from MO files
-Create email template for da
-Create email template for de
-Create email template for es
-Create email template for fi
-Create email template for fr
-Create email template for nb
 Create email template for nl
-Create email template for sv
+/sabnzbd/app/tools/make_mo.py:214: DeprecationWarning: parameter codeset is deprecated
+  trans = gettext.translation(DOMAIN_E, MO_DIR, [lng], fallback=False, codeset="latin-1")
+Create email template for es
+/sabnzbd/app/tools/make_mo.py:214: DeprecationWarning: parameter codeset is deprecated
+  trans = gettext.translation(DOMAIN_E, MO_DIR, [lng], fallback=False, codeset="latin-1")
+Create email template for ro
+/sabnzbd/app/tools/make_mo.py:214: DeprecationWarning: parameter codeset is deprecated
+  trans = gettext.translation(DOMAIN_E, MO_DIR, [lng], fallback=False, codeset="latin-1")
+Create email template for de
+/sabnzbd/app/tools/make_mo.py:214: DeprecationWarning: parameter codeset is deprecated
+  trans = gettext.translation(DOMAIN_E, MO_DIR, [lng], fallback=False, codeset="latin-1")
+Create email template for fi
+/sabnzbd/app/tools/make_mo.py:214: DeprecationWarning: parameter codeset is deprecated
+  trans = gettext.translation(DOMAIN_E, MO_DIR, [lng], fallback=False, codeset="latin-1")
+Create email template for fr
+/sabnzbd/app/tools/make_mo.py:214: DeprecationWarning: parameter codeset is deprecated
+  trans = gettext.translation(DOMAIN_E, MO_DIR, [lng], fallback=False, codeset="latin-1")
+Create email template for he
+/sabnzbd/app/tools/make_mo.py:214: DeprecationWarning: parameter codeset is deprecated
+  trans = gettext.translation(DOMAIN_E, MO_DIR, [lng], fallback=False, codeset="latin-1")
+Create email template for da
+/sabnzbd/app/tools/make_mo.py:214: DeprecationWarning: parameter codeset is deprecated
+  trans = gettext.translation(DOMAIN_E, MO_DIR, [lng], fallback=False, codeset="latin-1")
+Create email template for pl
+/sabnzbd/app/tools/make_mo.py:214: DeprecationWarning: parameter codeset is deprecated
+  trans = gettext.translation(DOMAIN_E, MO_DIR, [lng], fallback=False, codeset="latin-1")
 Create email template for zh_CN
+/sabnzbd/app/tools/make_mo.py:214: DeprecationWarning: parameter codeset is deprecated
+  trans = gettext.translation(DOMAIN_E, MO_DIR, [lng], fallback=False, codeset="latin-1")
+Create email template for sr
+/sabnzbd/app/tools/make_mo.py:214: DeprecationWarning: parameter codeset is deprecated
+  trans = gettext.translation(DOMAIN_E, MO_DIR, [lng], fallback=False, codeset="latin-1")
+Create email template for ru
+/sabnzbd/app/tools/make_mo.py:214: DeprecationWarning: parameter codeset is deprecated
+  trans = gettext.translation(DOMAIN_E, MO_DIR, [lng], fallback=False, codeset="latin-1")
+Create email template for nb
+/sabnzbd/app/tools/make_mo.py:214: DeprecationWarning: parameter codeset is deprecated
+  trans = gettext.translation(DOMAIN_E, MO_DIR, [lng], fallback=False, codeset="latin-1")
+Create email template for pt_BR
+/sabnzbd/app/tools/make_mo.py:214: DeprecationWarning: parameter codeset is deprecated
+  trans = gettext.translation(DOMAIN_E, MO_DIR, [lng], fallback=False, codeset="latin-1")
+Create email template for sv
+/sabnzbd/app/tools/make_mo.py:214: DeprecationWarning: parameter codeset is deprecated
+  trans = gettext.translation(DOMAIN_E, MO_DIR, [lng], fallback=False, codeset="latin-1")
 Main program MO files
-Compile locale/da/LC_MESSAGES/SABnzbd.mo
-Compile locale/de/LC_MESSAGES/SABnzbd.mo
-Compile locale/en/LC_MESSAGES/SABnzbd.mo
 Compile locale/es/LC_MESSAGES/SABnzbd.mo
-Compile locale/fi/LC_MESSAGES/SABnzbd.mo
 Compile locale/fr/LC_MESSAGES/SABnzbd.mo
 Compile locale/nb/LC_MESSAGES/SABnzbd.mo
-Compile locale/nl/LC_MESSAGES/SABnzbd.mo
-Compile locale/pl/LC_MESSAGES/SABnzbd.mo
-Compile locale/pt_BR/LC_MESSAGES/SABnzbd.mo
+Compile locale/fi/LC_MESSAGES/SABnzbd.mo
 Compile locale/ro/LC_MESSAGES/SABnzbd.mo
-Compile locale/ru/LC_MESSAGES/SABnzbd.mo
-Compile locale/sr/LC_MESSAGES/SABnzbd.mo
+Compile locale/pt_BR/LC_MESSAGES/SABnzbd.mo
+Compile locale/da/LC_MESSAGES/SABnzbd.mo
+Compile locale/nl/LC_MESSAGES/SABnzbd.mo
 Compile locale/sv/LC_MESSAGES/SABnzbd.mo
+Compile locale/he/LC_MESSAGES/SABnzbd.mo
 Compile locale/zh_CN/LC_MESSAGES/SABnzbd.mo
+Compile locale/en/LC_MESSAGES/SABnzbd.mo
+Compile locale/sr/LC_MESSAGES/SABnzbd.mo
+Compile locale/de/LC_MESSAGES/SABnzbd.mo
+Compile locale/ru/LC_MESSAGES/SABnzbd.mo
+Compile locale/pl/LC_MESSAGES/SABnzbd.mo
 Remove temporary templates
 
 [INFO] Current git version is:
-git version 2.13.0
+git version 2.24.1
 [INFO] Checkout the latest nzbToMedia version ...
 [INFO] Autoupdate is active, try to pull the latest sources for nzbToMedia ...
 [INFO] ... current git status is
 On branch master
-Your branch is up-to-date with 'origin/master'.
+Your branch is up to date with 'origin/master'.
+
 nothing to commit, working tree clean
-80c8ad58523ab99825c02f3855f9bd3dc9945d57
+2e7d4a58633b4b7924496ba849636bd5bb3b98cc
 [INFO] ... pulling sources
-Already up-to-date.
+Already up to date.
 [INFO] ... git status after update is
 On branch master
-Your branch is up-to-date with 'origin/master'.
-2017-05-28 12:31:16,344::INFO::[SABnzbd:1167] --------------------------------
-2017-05-28 12:31:16,345::INFO::[SABnzbd:1168] SABnzbd.py-2.0.x (rev=e69eeebdd8dfaab47ff412baa88a72aeef84c2a4)
-2017-05-28 12:31:16,346::INFO::[SABnzbd:1169] Full executable path = /sabnzbd/app/SABnzbd.py
-2017-05-28 12:31:16,346::INFO::[SABnzbd:1181] Platform = posix
-2017-05-28 12:31:16,347::INFO::[SABnzbd:1182] Python-version = 2.7.13 (default, Apr 20 2017, 12:13:37) 
-[GCC 6.3.0]
-2017-05-28 12:31:16,348::INFO::[SABnzbd:1183] Arguments = /sabnzbd/app/SABnzbd.py -f /sabnzbd/config -s 0.0.0.0:8080
-2017-05-28 12:31:16,348::INFO::[SABnzbd:1188] Preferred encoding = UTF-8
-2017-05-28 12:31:16,349::INFO::[SABnzbd:1229] Read INI file /sabnzbd/config/sabnzbd.ini
-2017-05-28 12:31:16,375::INFO::[__init__:995] Loading data for rss_data.sab from /sabnzbd/config/admin/rss_data.sab
-2017-05-28 12:31:16,389::INFO::[__init__:995] Loading data for totals10.sab from /sabnzbd/config/admin/totals10.sab
-2017-05-28 12:31:16,390::INFO::[postproc:95] Loading postproc queue
-2017-05-28 12:31:16,391::INFO::[__init__:995] Loading data for postproc2.sab from /sabnzbd/config/admin/postproc2.sab
-2017-05-28 12:31:16,392::INFO::[__init__:995] Loading data for queue10.sab from /sabnzbd/config/admin/queue10.sab
-2017-05-28 12:31:16,399::INFO::[__init__:995] Loading data for watched_data2.sab from /sabnzbd/config/admin/watched_data2.sab
-2017-05-28 12:31:16,401::INFO::[__init__:995] Loading data for Rating.sab from /sabnzbd/config/admin/Rating.sab
-2017-05-28 12:31:16,401::INFO::[__init__:998] /sabnzbd/config/admin/Rating.sab missing
-2017-05-28 12:31:16,402::INFO::[scheduler:197] Setting schedule for midnight BPS reset
-2017-05-28 12:31:16,466::INFO::[__init__:351] All processes started
-2017-05-28 12:31:16,466::INFO::[SABnzbd:283] Web dir is /sabnzbd/app/interfaces/Plush
-2017-05-28 12:31:16,467::INFO::[SABnzbd:283] Web dir is /sabnzbd/app/interfaces/Config
-2017-05-28 12:31:16,531::INFO::[SABnzbd:407] SABYenc module (v3.0.2)... found!
-2017-05-28 12:31:16,532::INFO::[SABnzbd:424] Cryptography module (v1.8.2)... found!
-2017-05-28 12:31:16,533::INFO::[SABnzbd:429] par2 binary... found (/usr/local/bin/par2)
-2017-05-28 12:31:16,533::INFO::[SABnzbd:434] par2cmdline binary... found (/usr/local/bin/par2)
-2017-05-28 12:31:16,533::INFO::[SABnzbd:437] UNRAR binary... found (/usr/bin/unrar)
-2017-05-28 12:31:16,534::INFO::[SABnzbd:450] unzip binary... found (/usr/bin/unzip)
-2017-05-28 12:31:16,534::INFO::[SABnzbd:455] 7za binary... found (/usr/bin/7za)
-2017-05-28 12:31:16,535::INFO::[SABnzbd:461] nice binary... found (/bin/nice)
-2017-05-28 12:31:16,535::INFO::[SABnzbd:465] ionice binary... found (/bin/ionice)
-2017-05-28 12:31:16,535::INFO::[SABnzbd:1274] SSL version LibreSSL 2.5.4
-2017-05-28 12:31:16,536::INFO::[SABnzbd:1275] SSL supported protocols ['TLS v1.2', 'TLS v1.1', 'TLS v1']
-2017-05-28 12:31:16,539::INFO::[SABnzbd:1386] Starting web-interface on 0.0.0.0:8080
-2017-05-28 12:31:16,540::INFO::[_cplogging:219] [28/May/2017:12:31:16] ENGINE Bus STARTING
-2017-05-28 12:31:16,551::INFO::[_cplogging:219] [28/May/2017:12:31:16] ENGINE Started monitor thread '_TimeoutMonitor'.
-2017-05-28 12:31:16,904::INFO::[_cplogging:219] [28/May/2017:12:31:16] ENGINE Serving on http://0.0.0.0:8080
-2017-05-28 12:31:16,905::INFO::[_cplogging:219] [28/May/2017:12:31:16] ENGINE Bus STARTED
-2017-05-28 12:31:16,906::INFO::[zconfig:64] No Bonjour/ZeroConfig support installed
-2017-05-28 12:31:16,906::INFO::[SABnzbd:1424] Starting SABnzbd.py-2.0.x
-2017-05-28 12:31:16,909::INFO::[postproc:176] Completed Download Folder /downloads/complete is not on FAT
-2017-05-28 12:31:16,911::INFO::[dirscanner:316] Dirscanner starting up
-2017-05-28 12:31:16,912::INFO::[urlgrabber:72] URLGrabber starting up
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+2e7d4a58633b4b7924496ba849636bd5bb3b98cc
+[INFO] Launching SABnzbd ...
 ```

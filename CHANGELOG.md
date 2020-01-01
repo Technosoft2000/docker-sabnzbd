@@ -1,3 +1,10 @@
+**2020-01-01 - v1.4.0**
+
+ * upgrade to latest base image [technosoft2000/alpine-base:3.11-1](https://hub.docker.com/r/technosoft2000/alpine-base/) based on Alpine 3.11.2
+ * changed to Python 3 and to the SABnzbd `develop` branch
+ * IMPORTANT: only Python 3 versions of SABnzbd are supported by this image, at the moment only the `py3` and `develop` branch
+ * fixed empty continuation line
+
 **2019-02-17 - v1.3.0**
 
  * upgrade to latest base image [technosoft2000/alpine-base:3.9-1](https://hub.docker.com/r/technosoft2000/alpine-base/)
